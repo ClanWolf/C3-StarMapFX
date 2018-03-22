@@ -1,0 +1,883 @@
+{
+  "Factions" : [ {
+    "color" : "#000000",
+    "name" : "Neutral",
+    "short" : "N",
+    "logo" : "N.png"
+  }, {
+    "color" : "#daa520",
+    "name" : "Arc-Royal Defense Cordon",
+    "short" : "ARDC",
+    "logo" : "ARDC.png"
+  }, {
+    "color" : "#009c55",
+    "name" : "Capellan Confederation",
+    "short" : "CC",
+    "logo" : "CC.png"
+  }, {
+    "color" : "#fffaf0",
+    "name" : "ComStar",
+    "short" : "CS",
+    "logo" : "CS.png"
+  }, {
+    "color" : "#ea2d2e",
+    "name" : "Draconis Combine",
+    "short" : "DC",
+    "logo" : "DC.png"
+  }, {
+    "color" : "#8fbc8f",
+    "name" : "Clan Wolverine",
+    "short" : "CWOV",
+    "logo" : "CWOV.png"
+  }, {
+    "color" : "#74abce",
+    "name" : "Free Rasalhague Republic",
+    "short" : "FRR",
+    "logo" : "FRR.png"
+  }, {
+    "color" : "#f8d42c",
+    "name" : "Federated Suns",
+    "short" : "FS",
+    "logo" : "FS.png"
+  }, {
+    "color" : "#a55ea0",
+    "name" : "Free Worlds League",
+    "short" : "FWL",
+    "logo" : "FWL.png"
+  }, {
+    "color" : "#007cba",
+    "name" : "Lyran Commonwealth",
+    "short" : "LC",
+    "logo" : "LC.png"
+  }, {
+    "color" : "#bcdfba",
+    "name" : "St. Ives Compact",
+    "short" : "SIC",
+    "logo" : "SIC.png"
+  }, {
+    "color" : "#ffa07a",
+    "name" : "Tikonov Free Republic",
+    "short" : "TFR",
+    "logo" : "TFR.png"
+  }, {
+    "color" : "#ffffff",
+    "name" : "Terran Hegemony",
+    "short" : "TH",
+    "logo" : "TH.png"
+  }, {
+    "color" : "#cdc0b0",
+    "name" : "Word of Blake",
+    "short" : "WOB",
+    "logo" : "WOB.png"
+  }, {
+    "color" : "#c6243a",
+    "name" : "Circinus Federation",
+    "short" : "CIR",
+    "logo" : "CIR.png"
+  }, {
+    "color" : "#ff00ff",
+    "name" : "Elysian Fields",
+    "short" : "EF",
+    "logo" : "EF.png"
+  }, {
+    "color" : "#ff69b4",
+    "name" : "Greater Valkyrate",
+    "short" : "GV",
+    "logo" : "GV.png"
+  }, {
+    "color" : "#00ffff",
+    "name" : "Illyrian Palatinate",
+    "short" : "IP",
+    "logo" : "IP.png"
+  }, {
+    "color" : "#ec8841",
+    "name" : "Marian Hegemony",
+    "short" : "MH",
+    "logo" : "MH.png"
+  }, {
+    "color" : "#399e91",
+    "name" : "Magistracy of Canopus",
+    "short" : "MOC",
+    "logo" : "MOC.png"
+  }, {
+    "color" : "#d2be99",
+    "name" : "Outworlds Alliance",
+    "short" : "OA",
+    "logo" : "OA.png"
+  }, {
+    "color" : "#32cd32",
+    "name" : "Oberon Confederation",
+    "short" : "OC",
+    "logo" : "OC.png"
+  }, {
+    "color" : "#20b2aa",
+    "name" : "New Colony Region",
+    "short" : "NCR",
+    "logo" : "NCR.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Periphery",
+    "short" : "P",
+    "logo" : "P.png"
+  }, {
+    "color" : "#5f9ea0",
+    "name" : "Rim Collection",
+    "short" : "RIM",
+    "logo" : "RIM.png"
+  }, {
+    "color" : "#e8caad",
+    "name" : "Rim Worlds Republic",
+    "short" : "RWR",
+    "logo" : "RWR.png"
+  }, {
+    "color" : "#b33e26",
+    "name" : "Taurian Concordat",
+    "short" : "TC",
+    "logo" : "TC.png"
+  }, {
+    "color" : "#228b22",
+    "name" : "Tortuga Dominions",
+    "short" : "TD",
+    "logo" : "TD.png"
+  }, {
+    "color" : "#bcdeeb",
+    "name" : "Clan Ghost Bear",
+    "short" : "CGB",
+    "logo" : "CGB.png"
+  }, {
+    "color" : "#f1a86e",
+    "name" : "Clan Hell's Horses",
+    "short" : "CHH",
+    "logo" : "CHH.png"
+  }, {
+    "color" : "#acd073",
+    "name" : "Clan Jade Falcon",
+    "short" : "CJF",
+    "logo" : "CJF.png"
+  }, {
+    "color" : "#f5fffa",
+    "name" : "Clan Nova Cat",
+    "short" : "CNC",
+    "logo" : "CNC.png"
+  }, {
+    "color" : "#98a481",
+    "name" : "Clan Smoke Jaguar",
+    "short" : "CSJ",
+    "logo" : "CSJ.png"
+  }, {
+    "color" : "#7fff00",
+    "name" : "Clan Steel Viper",
+    "short" : "CSV",
+    "logo" : "CSV.png"
+  }, {
+    "color" : "#cf723a",
+    "name" : "Clan Wolf",
+    "short" : "CW",
+    "logo" : "CW.png"
+  }, {
+    "color" : "#ff6347",
+    "name" : "Clan Blood Spirit",
+    "short" : "CBS",
+    "logo" : "CBS.png"
+  }, {
+    "color" : "#a9a9a9",
+    "name" : "Chaos March",
+    "short" : "CM",
+    "logo" : "CM.png"
+  }, {
+    "color" : "#6b8e23",
+    "name" : "Duchy of Small",
+    "short" : "DS",
+    "logo" : "DS.png"
+  }, {
+    "color" : "#008b8b",
+    "name" : "Styk Commonality",
+    "short" : "SKC",
+    "logo" : "SKC.png"
+  }, {
+    "color" : "#b8860b",
+    "name" : "Sarna Supremacy",
+    "short" : "SSUP",
+    "logo" : "SSUP.png"
+  }, {
+    "color" : "#808000",
+    "name" : "Saiph Triumvirate",
+    "short" : "ST",
+    "logo" : "ST.png"
+  }, {
+    "color" : "#e9967a",
+    "name" : "Terracap Confederation",
+    "short" : "TCC",
+    "logo" : "TCC.png"
+  }, {
+    "color" : "#a0522d",
+    "name" : "Clan Wolf-in-Exile",
+    "short" : "CWIE",
+    "logo" : "CWIE.png"
+  }, {
+    "color" : "#b0c4de",
+    "name" : "Star League",
+    "short" : "SL",
+    "logo" : "SL.png"
+  }, {
+    "color" : "#ffa500",
+    "name" : "Clan Burrock",
+    "short" : "CB",
+    "logo" : "CB.png"
+  }, {
+    "color" : "#deb887",
+    "name" : "Clan Widowmaker",
+    "short" : "CWI",
+    "logo" : "CWI.png"
+  }, {
+    "color" : "#9370db",
+    "name" : "Clan Cloud Cobra",
+    "short" : "CCC",
+    "logo" : "CCC.png"
+  }, {
+    "color" : "#0000cd",
+    "name" : "Clan Coyote",
+    "short" : "CCO",
+    "logo" : "CCO.png"
+  }, {
+    "color" : "#00ffff",
+    "name" : "Clan Sea Fox / Diamondshark",
+    "short" : "CDS",
+    "logo" : "CDS.png"
+  }, {
+    "color" : "#a52a2a",
+    "name" : "Clan Fire Mandrill",
+    "short" : "CFM",
+    "logo" : "CFM.png"
+  }, {
+    "color" : "#eee8aa",
+    "name" : "Clan Goliath Scorpion",
+    "short" : "CGS",
+    "logo" : "CGS.png"
+  }, {
+    "color" : "#f8f8ff",
+    "name" : "Clan Ice Hellion",
+    "short" : "CIH",
+    "logo" : "CIH.png"
+  }, {
+    "color" : "#6495ed",
+    "name" : "Clan Mongoose",
+    "short" : "CMG",
+    "logo" : "CMG.png"
+  }, {
+    "color" : "#87ceeb",
+    "name" : "Clan Snow Raven",
+    "short" : "CSR",
+    "logo" : "CSR.png"
+  }, {
+    "color" : "#daa520",
+    "name" : "Clan Star Adder",
+    "short" : "CSA",
+    "logo" : "CSA.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Minnesota Tribe",
+    "short" : "MT",
+    "logo" : "MT.png"
+  }, {
+    "color" : "#ffffff",
+    "name" : "Clan Spirit Cats",
+    "short" : "CGK",
+    "logo" : "CGK.png"
+  }, {
+    "color" : "#ffffff",
+    "name" : "Stormhammers",
+    "short" : "SH",
+    "logo" : "SH.png"
+  }, {
+    "color" : "#ffffff",
+    "name" : "Explorer Corps",
+    "short" : "EC",
+    "logo" : "EC.png"
+  }, {
+    "color" : "#882222",
+    "name" : "Aurigan Coalition",
+    "short" : "AC",
+    "logo" : "AC.png"
+  }, {
+    "color" : "#ff8c00",
+    "name" : "Lothian League",
+    "short" : "LL",
+    "logo" : "LL.png"
+  }, {
+    "color" : "#ff69b4",
+    "name" : "Morgraine's Valkyrate",
+    "short" : "MV",
+    "logo" : "MV.png"
+  }, {
+    "color" : "#7f978b",
+    "name" : "New Delphi Compact",
+    "short" : "NDC",
+    "logo" : "NDC.png"
+  }, {
+    "color" : "#cdad00",
+    "name" : "Niops Association",
+    "short" : "NIOPS",
+    "logo" : "NIOPS.png"
+  }, {
+    "color" : "#1e90ff",
+    "name" : "Fiefdom of Randis",
+    "short" : "FOR",
+    "logo" : "FOR.png"
+  }, {
+    "color" : "#a55ea0",
+    "name" : "Barony of Strang",
+    "short" : "BoS",
+    "logo" : "BoS.png"
+  }, {
+    "color" : "#0014dc",
+    "name" : "Western Alliance",
+    "short" : "WA",
+    "logo" : "WA.png"
+  }, {
+    "color" : "#0014dc",
+    "name" : "Asian Co-Prosperity Sphere",
+    "short" : "ACPS",
+    "logo" : "ACPS.png"
+  }, {
+    "color" : "#cf7739",
+    "name" : "Terran Alliance",
+    "short" : "TA",
+    "logo" : "TA.png"
+  }, {
+    "color" : "#8e4a7b",
+    "name" : "Amaris Empire",
+    "short" : "AE",
+    "logo" : "AE.png"
+  }, {
+    "color" : "#67a939",
+    "name" : "Alfrik",
+    "short" : "Alf",
+    "logo" : "Alf.png"
+  }, {
+    "color" : "#02a64f",
+    "name" : "Capellan Republic",
+    "short" : "CRep",
+    "logo" : "CRep.png"
+  }, {
+    "color" : "#02a64f",
+    "name" : "Capellan Hegemony",
+    "short" : "CH",
+    "logo" : "CH.png"
+  }, {
+    "color" : "#f291c5",
+    "name" : "Capellan Commonality",
+    "short" : "CCom",
+    "logo" : "CCom.png"
+  }, {
+    "color" : "#ffa07a",
+    "name" : "Tikonov Union",
+    "short" : "TU",
+    "logo" : "TU.png"
+  }, {
+    "color" : "#ffa07a",
+    "name" : "Tikonov Grand Union",
+    "short" : "TGU",
+    "logo" : "TGU.png"
+  }, {
+    "color" : "#b88616",
+    "name" : "Chesterton Trade Federation",
+    "short" : "CTL",
+    "logo" : "CTL.png"
+  }, {
+    "color" : "#e06820",
+    "name" : "Chisholm Protectorate",
+    "short" : "ChP",
+    "logo" : "ChP.png"
+  }, {
+    "color" : "#bcdfba",
+    "name" : "St. Ives Mercantile Association",
+    "short" : "SIMA",
+    "logo" : "SIMA.png"
+  }, {
+    "color" : "#02a64f",
+    "name" : "Sian Commonwealth",
+    "short" : "SCW",
+    "logo" : "SCW.png"
+  }, {
+    "color" : "#02a64f",
+    "name" : "Duchy of Liao",
+    "short" : "DoL",
+    "logo" : "DoL.png"
+  }, {
+    "color" : "#8042f4",
+    "name" : "Alliance of Galedon",
+    "short" : "AG",
+    "logo" : "AG.png"
+  }, {
+    "color" : "#42f442",
+    "name" : "Azami Caliphate",
+    "short" : "AC",
+    "logo" : "AC.png"
+  }, {
+    "color" : "#74abce",
+    "name" : "Principality of Rasalhague",
+    "short" : "PoR",
+    "logo" : "PoR.png"
+  }, {
+    "color" : "#1b62e5",
+    "name" : "Marlette Association",
+    "short" : "Mara",
+    "logo" : "Mara.png"
+  }, {
+    "color" : "#1be5c3",
+    "name" : "Muskegon Coalition",
+    "short" : "ME",
+    "logo" : "ME.png"
+  }, {
+    "color" : "#ab9476",
+    "name" : "United Hindu Collective",
+    "short" : "UHC",
+    "logo" : "UHC.png"
+  }, {
+    "color" : "#8fbec0",
+    "name" : "Marik Republic",
+    "short" : "MRep",
+    "logo" : "MRep.png"
+  }, {
+    "color" : "#a37078",
+    "name" : "Federation of Oriente",
+    "short" : "FoO",
+    "logo" : "FoO.png"
+  }, {
+    "color" : "#ff3333",
+    "name" : "Regulan Principality",
+    "short" : "RP",
+    "logo" : "RP.png"
+  }, {
+    "color" : "#4c0099",
+    "name" : "Stewart Confederation",
+    "short" : "SCon",
+    "logo" : "SCon.png"
+  }, {
+    "color" : "#42f48f",
+    "name" : "Protectorate of Donegal",
+    "short" : "PD",
+    "logo" : "PD.png"
+  }, {
+    "color" : "#42d9f4",
+    "name" : "Federation of Skye",
+    "short" : "FoS",
+    "logo" : "FoS.png"
+  }, {
+    "color" : "#f4a142",
+    "name" : "Tamar Pact",
+    "short" : "TamP",
+    "logo" : "TamP.png"
+  }, {
+    "color" : "#b33e26",
+    "name" : "Taurian Homeworlds",
+    "short" : "THW",
+    "logo" : "THW.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Abandoned",
+    "short" : "ABN",
+    "logo" : "ABN.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Disputed",
+    "short" : "DIS",
+    "logo" : "DIS.png"
+  }, {
+    "color" : "#ee42f4",
+    "name" : "Azami Brotherhood",
+    "short" : "AB",
+    "logo" : "AB.png"
+  }, {
+    "color" : "#cef442",
+    "name" : "Ozawa Mercantile Association",
+    "short" : "OMA",
+    "logo" : "OMA.png"
+  }, {
+    "color" : "#008080",
+    "name" : "Calderon Protectorate",
+    "short" : "CDP",
+    "logo" : "CDP.png"
+  }, {
+    "color" : "#ff505d",
+    "name" : "Chainelane Isles",
+    "short" : "CI",
+    "logo" : "CI.png"
+  }, {
+    "color" : "#9370db",
+    "name" : "The Society",
+    "short" : "SOC",
+    "logo" : "SOC.png"
+  }, {
+    "color" : "#f1a86e",
+    "name" : "Clan Stone Lion",
+    "short" : "CSL",
+    "logo" : "CSL.png"
+  }, {
+    "color" : "#cf723a",
+    "name" : "Wolf Empire",
+    "short" : "CWE",
+    "logo" : "CWE.png"
+  }, {
+    "color" : "#9494ff",
+    "name" : "Duchy of Andurien",
+    "short" : "DA",
+    "logo" : "DA.png"
+  }, {
+    "color" : "#8fbec0",
+    "name" : "Duchy of Graham-Marik",
+    "short" : "DGM",
+    "logo" : "DGM.png"
+  }, {
+    "color" : "#a37078",
+    "name" : "Duchy of Oriente",
+    "short" : "DO",
+    "logo" : "DO.png"
+  }, {
+    "color" : "#a45e7e",
+    "name" : "Duchy of Orloff",
+    "short" : "DoO",
+    "logo" : "DoO.png"
+  }, {
+    "color" : "#635ea5",
+    "name" : "Duchy of Tamarind-Abbey",
+    "short" : "DTA",
+    "logo" : "DTA.png"
+  }, {
+    "color" : "#9e3c93",
+    "name" : "Duchy of Tamarind",
+    "short" : "DT",
+    "logo" : "DT.png"
+  }, {
+    "color" : "#eee8aa",
+    "name" : "Escorpion Imperio",
+    "short" : "CEI",
+    "logo" : "CEI.png"
+  }, {
+    "color" : "#f8d42c",
+    "name" : "Federated Commonwealth",
+    "short" : "FC",
+    "logo" : "FC.png"
+  }, {
+    "color" : "#ffe4b5",
+    "name" : "Filtvelt Coalition",
+    "short" : "FVC",
+    "logo" : "FVC.png"
+  }, {
+    "color" : "#44d4e4",
+    "name" : "Free Worlds League Rebels",
+    "short" : "FWLR",
+    "logo" : "FWLR.png"
+  }, {
+    "color" : "#80a97f",
+    "name" : "Fronc Reaches",
+    "short" : "FR",
+    "logo" : "FR.png"
+  }, {
+    "color" : "#db7093",
+    "name" : "Hanseatic League",
+    "short" : "HL",
+    "logo" : "HL.png"
+  }, {
+    "color" : "#bebebe",
+    "name" : "Independent (Periphery)",
+    "short" : "PIND",
+    "logo" : "PIND.png"
+  }, {
+    "color" : "#d2d2d2",
+    "name" : "Independent",
+    "short" : "IND",
+    "logo" : "IND.png"
+  }, {
+    "color" : "#9932cc",
+    "name" : "Jarnfolk",
+    "short" : "JF",
+    "logo" : "JF.png"
+  }, {
+    "color" : "#505050",
+    "name" : "Khwarazm Empire",
+    "short" : "KE",
+    "logo" : "KE.png"
+  }, {
+    "color" : "#e07e27",
+    "name" : "Kittery Prefecture",
+    "short" : "KP",
+    "logo" : "KP.png"
+  }, {
+    "color" : "#02a64f",
+    "name" : "Liao Republic",
+    "short" : "LR",
+    "logo" : "LR.png"
+  }, {
+    "color" : "#da70d6",
+    "name" : "Malagrotta Cooperative",
+    "short" : "MC",
+    "logo" : "MC.png"
+  }, {
+    "color" : "#a55ea0",
+    "name" : "Marik Commonwealth",
+    "short" : "MCM",
+    "logo" : "MCM.png"
+  }, {
+    "color" : "#754171",
+    "name" : "Marik-Stewart Commonwealth",
+    "short" : "MSC",
+    "logo" : "MSC.png"
+  }, {
+    "color" : "#a9a9a9",
+    "name" : "Mercenary",
+    "short" : "MERC",
+    "logo" : "MERC.png"
+  }, {
+    "color" : "#a55ea0",
+    "name" : "Mosiro Archipelago",
+    "short" : "MA",
+    "logo" : "MA.png"
+  }, {
+    "color" : "#00ff00",
+    "name" : "Nueva Castile",
+    "short" : "NC",
+    "logo" : "NC.png"
+  }, {
+    "color" : "#e7b232",
+    "name" : "New Oberon Confederation",
+    "short" : "NOC",
+    "logo" : "NOC.png"
+  }, {
+    "color" : "#a0a55e",
+    "name" : "Ohrenson-Zion Province",
+    "short" : "OZP",
+    "logo" : "OZP.png"
+  }, {
+    "color" : "#a37078",
+    "name" : "Oriente Protectorate",
+    "short" : "OP",
+    "logo" : "OP.png"
+  }, {
+    "color" : "#fafafa",
+    "name" : "Principality of Gibson",
+    "short" : "PG",
+    "logo" : "PG.png"
+  }, {
+    "color" : "#c08fbd",
+    "name" : "Principality of Regulus",
+    "short" : "PR",
+    "logo" : "PR.png"
+  }, {
+    "color" : "#bcdeeb",
+    "name" : "Rasalhague Dominion",
+    "short" : "RD",
+    "logo" : "RD.png"
+  }, {
+    "color" : "#19786e",
+    "name" : "Raven Alliance",
+    "short" : "RA",
+    "logo" : "RA.png"
+  }, {
+    "color" : "#ff3333",
+    "name" : "Regulan Fiefs",
+    "short" : "RF",
+    "logo" : "RF.png"
+  }, {
+    "color" : "#a55ea0",
+    "name" : "Regulan Free States",
+    "short" : "RFS",
+    "logo" : "RFS.png"
+  }, {
+    "color" : "#cf7739",
+    "name" : "Republic of the Sphere",
+    "short" : "ROS",
+    "logo" : "ROS.png"
+  }, {
+    "color" : "#cf7739",
+    "name" : "Stone's Coalition",
+    "short" : "Stone",
+    "logo" : "Stone.png"
+  }, {
+    "color" : "#cf7739",
+    "name" : "Republic Territories",
+    "short" : "RTR",
+    "logo" : "RTR.png"
+  }, {
+    "color" : "#5f9ea0",
+    "name" : "Rim Commonality",
+    "short" : "RCM",
+    "logo" : "RCM.png"
+  }, {
+    "color" : "#afeeee",
+    "name" : "Rim Territories",
+    "short" : "RT",
+    "logo" : "RT.png"
+  }, {
+    "color" : "#b8860b",
+    "name" : "Sarna Protectorate",
+    "short" : "SP",
+    "logo" : "SP.png"
+  }, {
+    "color" : "#91a6f2",
+    "name" : "Sian Supremacy",
+    "short" : "SIS",
+    "logo" : "SIS.png"
+  }, {
+    "color" : "#ff007f",
+    "name" : "Silver Hawk Coalition",
+    "short" : "SHC",
+    "logo" : "SHC.png"
+  }, {
+    "color" : "#b0c4de",
+    "name" : "Star League-in-Exile",
+    "short" : "SLIE",
+    "logo" : "SLIE.png"
+  }, {
+    "color" : "#4c0099",
+    "name" : "Stewart Commonality",
+    "short" : "SC",
+    "logo" : "SC.png"
+  }, {
+    "color" : "#008b8b",
+    "name" : "Styk Protectorate",
+    "short" : "SKP",
+    "logo" : "SKP.png"
+  }, {
+    "color" : "#ffffe0",
+    "name" : "The Barrens",
+    "short" : "TB",
+    "logo" : "TB.png"
+  }, {
+    "color" : "#ff3333",
+    "name" : "The Protectorate",
+    "short" : "TP",
+    "logo" : "TP.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Undiscovered",
+    "short" : "UND",
+    "logo" : "UND.png"
+  }, {
+    "color" : "#8b4513",
+    "name" : "All Clans",
+    "short" : "CLAN",
+    "logo" : "CLAN.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Unexplored",
+    "short" : "NONE",
+    "logo" : "NONE.png"
+  }, {
+    "color" : "#f0e68c",
+    "name" : "Mica Majority",
+    "short" : "MM",
+    "logo" : "MM.png"
+  }, {
+    "color" : "#ff6699",
+    "name" : "Senatorial Alliance",
+    "short" : "SA",
+    "logo" : "SA.png"
+  }, {
+    "color" : "#ff6699",
+    "name" : "Augustine Alliance",
+    "short" : "AA",
+    "logo" : "AA.png"
+  }, {
+    "color" : "#999933",
+    "name" : "Tall Trees Union",
+    "short" : "TTU",
+    "logo" : "TTU.png"
+  }, {
+    "color" : "#611a5c",
+    "name" : "Shiloh Alliance",
+    "short" : "ShA",
+    "logo" : "ShA.png"
+  }, {
+    "color" : "#663333",
+    "name" : "Covenant Worlds",
+    "short" : "CvW",
+    "logo" : "CvW.png"
+  }, {
+    "color" : "#333366",
+    "name" : "Protectorate Coalition",
+    "short" : "PC",
+    "logo" : "PC.png"
+  }, {
+    "color" : "#ff0033",
+    "name" : "Milton Combine",
+    "short" : "MiC",
+    "logo" : "MiC.png"
+  }, {
+    "color" : "#99ff33",
+    "name" : "Clan Protectorate",
+    "short" : "CP",
+    "logo" : "CP.png"
+  }, {
+    "color" : "#802800",
+    "name" : "Republic Remnant",
+    "short" : "RR",
+    "logo" : "RR.png"
+  }, {
+    "color" : "#802800",
+    "name" : "Pirate",
+    "short" : "PIR",
+    "logo" : "PIR.png"
+  }, {
+    "color" : "#00ff00",
+    "name" : "Umayyad Caliphate",
+    "short" : "UC",
+    "logo" : "UC.png"
+  }, {
+    "color" : "#000000",
+    "name" : "Rebels",
+    "short" : "REB",
+    "logo" : "REB.png"
+  }, {
+    "color" : "#ea2d2e",
+    "name" : "Ronin",
+    "short" : "RON",
+    "logo" : "RON.png"
+  }, {
+    "color" : "#9932cc",
+    "name" : "Axumite Providence",
+    "short" : "AXP",
+    "logo" : "AXP.png"
+  }, {
+    "color" : "#ff0000",
+    "name" : "Coreward Confederacy",
+    "short" : "CCon",
+    "logo" : "CCon.png"
+  }, {
+    "color" : "#66ffff",
+    "name" : "Galatean Defense League",
+    "short" : "GDL",
+    "logo" : "GDL.png"
+  }, {
+    "color" : "#66ffff",
+    "name" : "Galatean League",
+    "short" : "GL",
+    "logo" : "GL.png"
+  }, {
+    "color" : "#ffff66",
+    "name" : "Interstellar Expeditions",
+    "short" : "IE",
+    "logo" : "IE.png"
+  }, {
+    "color" : "#bfab78",
+    "name" : "Ferris Collective",
+    "short" : "FCo",
+    "logo" : "FCo.png"
+  }, {
+    "color" : "#bfab78",
+    "name" : "Finmark Free Republic",
+    "short" : "FFR",
+    "logo" : "FFR.png"
+  }, {
+    "color" : "#d3bd48",
+    "name" : "Ragnarok Union",
+    "short" : "RU",
+    "logo" : "RU.png"
+  }, {
+    "color" : "#93adac",
+    "name" : "The Havens",
+    "short" : "THa",
+    "logo" : "THa.png"
+  } ]
+}
