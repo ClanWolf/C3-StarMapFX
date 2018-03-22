@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import org.kynosarges.tektosyne.geometry.PointD;
 
 import javax.json.*;
 import javax.json.JsonValue.ValueType;
@@ -29,17 +30,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-class PannableCanvas extends Pane {
+import static net.clanwolf.c3.starmap.Config.BACKGROUND_STARS_LAYERS;
 
+class PannableCanvas extends Pane {
 	private DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 	private HashMap<String, StarSystem> universe = null;
-	private Canvas grid1 = null;
-	private Canvas grid2 = null;
+	private Canvas grid_500 = null;
+	private Canvas grid_250 = null;
+	private Canvas grid_center = null;
 	private Pane starPane = null;
-	private HashMap<String, ArrayList<Circle>> starPanelsStarLists = new HashMap<>();
-
-	private int mapWidth = 6000;
-	private int mapHeight = 6000;
+	private HashMap<Integer, ArrayList<Circle>> starPanelsStarLists = new HashMap<>();
 
 	private boolean starSystemLabelsVisible = true;
 
@@ -47,20 +47,20 @@ class PannableCanvas extends Pane {
 	private Circle starSystemMarkerCircle60ly;
 
 	PannableCanvas() {
-		setPrefSize(mapWidth, mapHeight);
+		setPrefSize(Config.MAP_WIDTH, Config.MAP_HEIGHT);
 		setStyle("-fx-background-color:transparent;-fx-border-width:10px;-fx-border-color:gray;");
 
 		// add scale transform
 		scaleXProperty().bind(myScale);
 		scaleYProperty().bind(myScale);
 
-		double radius2 = 300;
+		double radius2 = 30 * 2 * Config.MAP_COORDINATES_MULTIPLICATOR; // 60 Lightyears
 		starSystemMarkerCircle60ly = new Circle(radius2);
 		starSystemMarkerCircle60ly.setStroke(new Color(1, 1, 1, 0.1));
 		starSystemMarkerCircle60ly.setFill(new Color(1, 1, 1, 0.05));
 		starSystemMarkerCircle60ly.setVisible(false);
 
-		double radius = 150;
+		double radius = 30 * Config.MAP_COORDINATES_MULTIPLICATOR; // 30 Lightyears
 		starSystemMarkerCircle30ly = new Circle(radius);
 		starSystemMarkerCircle30ly.setStroke(new Color(1, 1, 1, 0.1));
 		starSystemMarkerCircle30ly.setFill(new Color(1, 1, 1, 0.05));
@@ -91,11 +91,9 @@ class PannableCanvas extends Pane {
 	/**
 	 * Add a grid to the canvas, send it to back
 	 */
-	public void addStarPane(String level, int number) {
-		ArrayList<Circle> l = new ArrayList<>();
-
-		double w = mapWidth;
-		double h = mapHeight;
+	public void addStarPane() {
+		double w = Config.MAP_WIDTH;
+		double h = Config.MAP_HEIGHT;
 
 		if (starPane == null) {
 			starPane = new Pane();
@@ -104,27 +102,35 @@ class PannableCanvas extends Pane {
 			starPane.setMouseTransparent(true);
 		}
 
-		for (int i = 0; i < number; i++) {
-			double x = (((Math.random()) * w + 1));
-			double y = w - (((Math.random()) * h + 1));
-			int size = (int) ((Math.random()) * 4 + 1);
+		for (int[] layer : BACKGROUND_STARS_LAYERS) {
+			int level = layer[0];
+			int number = layer[1];
 
-			Circle c = new Circle(x, y, size);
-			c.setStrokeWidth(0);
-			c.setFill(Color.WHITESMOKE.deriveColor(1, 1, 1, 0.4));
-			l.add(c);
-			starPane.getChildren().add(c);
-		}
-		starPanelsStarLists.put(level, l);
-		if (!getChildren().contains(starPane)) {
-			getChildren().add(starPane);
-			starPane.toBack();
+			ArrayList<Circle> l = new ArrayList<>();
+
+			for (int i = 0; i < number; i++) {
+				double x = (((Math.random()) * w + 1));
+				double y = w - (((Math.random()) * h + 1));
+				int size = (int) ((Math.random()) * Config.BACKGROUND_STARS_MAX_SIZE + 1);
+
+				Circle c = new Circle(x, y, size);
+				c.setStrokeWidth(0);
+				c.setFill(Color.WHITESMOKE.deriveColor(1, 1, 1, 0.4));
+				l.add(c);
+				starPane.getChildren().add(c);
+			}
+			starPanelsStarLists.put(level, l);
+			if (!getChildren().contains(starPane)) {
+				getChildren().add(starPane);
+				starPane.toBack();
+			}
 		}
 	}
 
-	public void moveBackgroundStarPane(String level, double x, double y) {
+	public void moveBackgroundStarPane(int level, double x, double y) {
 		Platform.runLater(new Runnable() {
-			@Override public void run() {
+			@Override
+			public void run() {
 				ArrayList<Circle> l = starPanelsStarLists.get(level);
 				for (Circle c : l) {
 					c.setCenterX(c.getCenterX() + x);
@@ -134,17 +140,14 @@ class PannableCanvas extends Pane {
 		});
 	}
 
-	/**
-	 * Add a grid to the canvas, send it to back
-	 */
-	public void addGrid1() {
-		double w = mapWidth;
-		double h = mapHeight;
+	public void addGrid_500() {
+		double w = Config.MAP_WIDTH;
+		double h = Config.MAP_HEIGHT;
 
-		grid1 = new Canvas(w, h);
-		grid1.setMouseTransparent(true);
+		grid_500 = new Canvas(w, h);
+		grid_500.setMouseTransparent(true);
 
-		GraphicsContext gc = grid1.getGraphicsContext2D();
+		GraphicsContext gc = grid_500.getGraphicsContext2D();
 		gc.setStroke(Color.ORANGE);
 		gc.setLineWidth(1);
 
@@ -154,34 +157,31 @@ class PannableCanvas extends Pane {
 			gc.strokeLine(i, 0, i, h);
 			gc.strokeLine(0, i, w, i);
 		}
-		getChildren().add(grid1);
-		grid1.toBack();
+		getChildren().add(grid_500);
+		grid_500.toBack();
 	}
 
-	private void setGrid1Visible() {
-		if (grid1 != null) {
+	private void setGrid_500_Visible() {
+		if (grid_500 != null) {
 
 			double zoomLevelToHideGrid1 = .4;
 
 			if (myScale.get() >= zoomLevelToHideGrid1) {
-				grid1.setVisible(true);
+				grid_500.setVisible(true);
 			} else if (myScale.get() < zoomLevelToHideGrid1) {
-				grid1.setVisible(false);
+				grid_500.setVisible(false);
 			}
 		}
 	}
 
-	/**
-	 * Add a grid to the canvas, send it to back
-	 */
-	public void addGrid2() {
-		double w = mapWidth;
-		double h = mapHeight;
+	public void addGrid_250() {
+		double w = Config.MAP_WIDTH;
+		double h = Config.MAP_HEIGHT;
 
-		grid2 = new Canvas(w, h);
-		grid2.setMouseTransparent(true);
+		grid_250 = new Canvas(w, h);
+		grid_250.setMouseTransparent(true);
 
-		GraphicsContext gc = grid2.getGraphicsContext2D();
+		GraphicsContext gc = grid_250.getGraphicsContext2D();
 		gc.setStroke(Color.GRAY);
 		gc.setLineWidth(1);
 
@@ -191,21 +191,41 @@ class PannableCanvas extends Pane {
 			gc.strokeLine(i, 0, i, h);
 			gc.strokeLine(0, i, w, i);
 		}
-		getChildren().add(grid2);
-		grid2.toBack();
+		getChildren().add(grid_250);
+		grid_250.toBack();
 	}
 
-	private void setGrid2Visible() {
-		if (grid2 != null) {
+	private void setGrid_250_Visible() {
+		if (grid_250 != null) {
 
 			double zoomLevelToHideGrid2 = .7;
 
 			if (myScale.get() >= zoomLevelToHideGrid2) {
-				grid2.setVisible(true);
+				grid_250.setVisible(true);
+				grid_center.setVisible(true);
 			} else if (myScale.get() < zoomLevelToHideGrid2) {
-				grid2.setVisible(false);
+				grid_250.setVisible(false);
+				grid_center.setVisible(false);
 			}
 		}
+	}
+
+	public void addGrid_Center() {
+		double w = Config.MAP_WIDTH;
+		double h = Config.MAP_HEIGHT;
+
+		grid_center = new Canvas(w, h);
+		grid_center.setMouseTransparent(true);
+
+		GraphicsContext gc = grid_center.getGraphicsContext2D();
+		gc.setStroke(Color.RED);
+		gc.setLineWidth(2);
+
+		gc.strokeLine(w / 2, 0, w / 2, h);
+		gc.strokeLine(0, h / 2, h, h / 2);
+
+		getChildren().add(grid_center);
+		grid_center.toBack();
 	}
 
 	public double getScale() {
@@ -220,8 +240,8 @@ class PannableCanvas extends Pane {
 	public void setScale(double scale) {
 		myScale.set(scale);
 		setStarSystemLabelsVisible();
-		setGrid1Visible();
-		setGrid2Visible();
+		setGrid_500_Visible();
+		setGrid_250_Visible();
 	}
 
 	private void setStarSystemLabelsVisible() {
@@ -252,8 +272,8 @@ class PannableCanvas extends Pane {
 	public void setStarSystemLabels(HashMap<String, StarSystem> universe) {
 		this.universe = universe;
 		setStarSystemLabelsVisible();
-		setGrid1Visible();
-		setGrid2Visible();
+		setGrid_500_Visible();
+		setGrid_250_Visible();
 	}
 }
 
@@ -351,9 +371,6 @@ class NodeGestures {
  * Listeners for making the scene's canvas draggable and zoomable
  */
 class SceneGestures {
-
-	private static final double MAX_SCALE = 3.0d;
-	private static final double MIN_SCALE = .2d;
 	private double previousX;
 	private double previousY;
 
@@ -420,6 +437,7 @@ class SceneGestures {
 			if (!event.isSecondaryButtonDown()) {
 				return;
 			}
+			// TODO: Check whether borders are reached and panning must be prevented
 
 			double diffX = sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX;
 			double diffY = sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY;
@@ -440,9 +458,11 @@ class SceneGestures {
 			} else if (y > previousY) {
 				multiy = 1;
 			}
-			canvas.moveBackgroundStarPane("level1", 1 * multix,1 * multiy);
-			canvas.moveBackgroundStarPane("level2", 2 * multix,2 * multiy);
-			canvas.moveBackgroundStarPane("level3", 4 * multix,4 * multiy);
+			for (int[] layer : BACKGROUND_STARS_LAYERS) {
+				int level = layer[0];
+				int factor = layer[2];
+				canvas.moveBackgroundStarPane(level, factor * multix, factor * multiy);
+			}
 
 			previousX = x;
 			previousY = y;
@@ -468,7 +488,7 @@ class SceneGestures {
 				scale *= delta;
 			}
 
-			scale = clamp(scale, MIN_SCALE, MAX_SCALE);
+			scale = clamp(scale, Config.MAP_MIN_SCALE, Config.MAP_MAX_SCALE);
 			double f = (scale / oldScale) - 1;
 
 			// maxX = right overhang, maxY = lower overhang
@@ -513,14 +533,14 @@ class SceneGestures {
 	}
 
 	private double getUniverseX(double screenX) {
-		double universeX = screenX - 3000;
-		universeX = universeX / 5;
+		double universeX = screenX - (Config.MAP_WIDTH / 2);
+		universeX = universeX / Config.MAP_COORDINATES_MULTIPLICATOR;
 		return universeX;
 	}
 
 	private double getUniverseY(double screenY) {
-		double universeY = screenY - 3000;
-		universeY = universeY / 5;
+		double universeY = screenY - (Config.MAP_HEIGHT / 2);
+		universeY = universeY / Config.MAP_COORDINATES_MULTIPLICATOR;
 		return universeY;
 	}
 }
@@ -617,16 +637,23 @@ public class StarMap extends Application {
 			init();
 
 			PannableCanvas canvas = new PannableCanvas();
-			canvas.setTranslateX(-2500);
-			canvas.setTranslateY(-1620);
+			canvas.setTranslateX(Config.MAP_INITIAL_TRANSLATE_X);
+			canvas.setTranslateY(Config.MAP_INITIAL_TRANSLATE_Y);
 
 			// create sample nodes which can be dragged
 			NodeGestures nodeGestures = new NodeGestures(canvas, universe);
 
+			PointD[] points = new PointD[universe.size()];
+
+			int counter = 0;
 			for (StarSystem starSystem : universe.values()) {
 				String name = starSystem.getName();
 				double x = starSystem.getScreenX();
 				double y = starSystem.getScreenY();
+
+				PointD p = new PointD(x, y);
+				points[counter] = p;
+				counter++;
 
 				Group starSystemGroup = new Group();
 				starSystemGroup.setId(name);
@@ -661,11 +688,11 @@ public class StarMap extends Application {
 				starSystem.setStarSystemGroup(starSystemGroup);
 				canvas.getChildren().add(starSystemGroup);
 			}
-			canvas.addStarPane("level1", 300);
-			canvas.addStarPane("level2", 200);
-			canvas.addStarPane("level3", 100);
-			canvas.addGrid1();
-			canvas.addGrid2();
+			//canvas.getChildren().add(GeoTools.getAreas(points));
+			canvas.addGrid_Center();
+			canvas.addStarPane();
+			canvas.addGrid_500();
+			canvas.addGrid_250();
 			canvas.setStarSystemLabels(universe);
 
 			String image = StarMap.class.getResource("background.jpg").toExternalForm();
@@ -693,7 +720,6 @@ public class StarMap extends Application {
 			// do this after stage.show in order for the stackpane to have an actual size!
 			for (StarSystem ss : universe.values()) {
 				StackPane sp = ss.getStarSystemStackPane();
-				System.out.println(sp.getWidth());
 				Group g = ss.getStarSystemGroup();
 				g.setLayoutX(-sp.getWidth() / 2);
 				g.setLayoutY(-sp.getHeight() / 2);

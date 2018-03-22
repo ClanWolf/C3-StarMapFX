@@ -28,14 +28,14 @@ public class StarSystem {
 	}
 
 	public double getScreenX() {
-		double screenX = x.doubleValue() * 5;
-		screenX = 3000 + screenX;
+		double screenX = x.doubleValue() * Config.MAP_COORDINATES_MULTIPLICATOR;
+		screenX = (Config.MAP_WIDTH / 2) + screenX;
 		return screenX;
 	}
 
 	public double getScreenY() {
-		double screenY = y.doubleValue() * 5;
-		screenY = 6000 - (3000 + screenY);
+		double screenY = y.doubleValue() * Config.MAP_COORDINATES_MULTIPLICATOR;
+		screenY = Config.MAP_HEIGHT - ((Config.MAP_HEIGHT /2) + screenY);
 		return screenY;
 	}
 
