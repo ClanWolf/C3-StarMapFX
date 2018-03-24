@@ -688,12 +688,23 @@ public class StarMap extends Application {
 				starSystem.setStarSystemGroup(starSystemGroup);
 				canvas.getChildren().add(starSystemGroup);
 			}
-			//canvas.getChildren().add(GeoTools.getAreas(points));
+
+			Pane borders = GeoTools.getAreas(points);
+			canvas.getChildren().add(borders);
+			borders.toBack();
+
 			canvas.addGrid_Center();
 			canvas.addStarPane();
 			canvas.addGrid_500();
 			canvas.addGrid_250();
 			canvas.setStarSystemLabels(universe);
+
+			Circle circle1 = new Circle( 3000, 3000, 40);
+			circle1.setStroke(Color.ORANGE);
+			circle1.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.5));
+			circle1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+			circle1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+			canvas.getChildren().add(circle1);
 
 			String image = StarMap.class.getResource("background.jpg").toExternalForm();
 			String style = "";
