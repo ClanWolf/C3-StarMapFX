@@ -1,5 +1,7 @@
 package net.clanwolf.c3.starmap;
 
+import javafx.scene.paint.Color;
+
 public class Config {
 
     // Map
@@ -10,6 +12,9 @@ public class Config {
     protected static final double MAP_MIN_SCALE = .2d;
     protected static final double MAP_INITIAL_TRANSLATE_X = -2500;
     protected static final double MAP_INITIAL_TRANSLATE_Y = -1620;
+    protected static final double MAP_BACKGROUND_AREA_RADIUS = 90;
+    protected static final double MAP_BACKGROUND_AREA_RADIUS_BORDER_WIDTH = 3;
+    protected static final Color MAP_BACKGROUND_AREA_BORDER_COLOR = Color.DARKORANGE;
 
     // Background stars
     protected static final int BACKGROUND_STARS_MAX_SIZE = 4;

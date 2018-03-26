@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import org.kynosarges.tektosyne.geometry.PointD;
 
 import java.math.BigDecimal;
 

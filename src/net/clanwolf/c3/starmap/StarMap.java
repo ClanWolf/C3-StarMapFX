@@ -643,17 +643,11 @@ public class StarMap extends Application {
 			// create sample nodes which can be dragged
 			NodeGestures nodeGestures = new NodeGestures(canvas, universe);
 
-			PointD[] points = new PointD[universe.size()];
-
 			int counter = 0;
 			for (StarSystem starSystem : universe.values()) {
 				String name = starSystem.getName();
 				double x = starSystem.getScreenX();
 				double y = starSystem.getScreenY();
-
-				PointD p = new PointD(x, y);
-				points[counter] = p;
-				counter++;
 
 				Group starSystemGroup = new Group();
 				starSystemGroup.setId(name);
@@ -689,12 +683,8 @@ public class StarMap extends Application {
 				canvas.getChildren().add(starSystemGroup);
 			}
 
-			Pane borders = GeoTools.getAreas(points);
-			canvas.getChildren().add(borders);
-			borders.toBack();
-
-			canvas.addGrid_Center();
 			canvas.addStarPane();
+			canvas.addGrid_Center();
 			canvas.addGrid_500();
 			canvas.addGrid_250();
 			canvas.setStarSystemLabels(universe);
@@ -705,6 +695,10 @@ public class StarMap extends Application {
 			circle1.addEventFilter( MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
 			circle1.addEventFilter( MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 			canvas.getChildren().add(circle1);
+
+			Pane borders = GeoTools.getAreas(universe, factions);
+			canvas.getChildren().add(borders);
+			borders.toBack();
 
 			String image = StarMap.class.getResource("background.jpg").toExternalForm();
 			String style = "";
