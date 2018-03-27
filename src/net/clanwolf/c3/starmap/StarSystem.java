@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 public class StarSystem {
 
+	private Integer id;
 	private String name;
 	private BigDecimal x;
 	private BigDecimal y;
@@ -19,6 +20,14 @@ public class StarSystem {
 	private Label starSystemLabel;
 	private StackPane starSystemStackPane;
 	private Group starSystemGroup;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;

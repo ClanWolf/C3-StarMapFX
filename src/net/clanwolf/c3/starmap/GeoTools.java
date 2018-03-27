@@ -79,6 +79,7 @@ public class GeoTools {
 					Color color = Color.web(colorString);
 					factionBackground.setFill(color.deriveColor(1,1,1,0.2));
 					factionBackground.setStrokeWidth(Config.MAP_BACKGROUND_AREA_RADIUS_BORDER_WIDTH);
+					factionBackground.setStrokeLineJoin(StrokeLineJoin.ROUND);
 					factionBackground.setStroke(Config.MAP_BACKGROUND_AREA_BORDER_COLOR.deriveColor(.7, .7,.7, 1));
 					borderPane.getChildren().add(factionBackground);
 				}
