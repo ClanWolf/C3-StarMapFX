@@ -15,7 +15,6 @@ public class StarSystem {
 	private BigDecimal x;
 	private BigDecimal y;
 	private String affiliation;
-
 	private Circle starSystemCircle;
 	private Label starSystemLabel;
 	private StackPane starSystemStackPane;

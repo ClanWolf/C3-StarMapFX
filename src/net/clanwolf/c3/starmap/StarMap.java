@@ -48,12 +48,10 @@ class PannableCanvas extends Pane {
 	private Pane attacksPane = null;
 	private ArrayList<ImageView> jumpshipIcons = null;
 	private HashMap<Integer, ArrayList<Circle>> starPanelsStarLists = new HashMap<>();
-
 	private boolean starSystemLabelsVisible = true;
 	private boolean starSystemCirclesVisible = true;
 	private boolean attacksVisible = true;
 	private boolean jumpshipsVisible = false;
-
 	private Circle starSystemMarkerCircle30ly;
 	private Circle starSystemMarkerCircle60ly;
 
