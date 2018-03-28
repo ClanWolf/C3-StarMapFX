@@ -66,15 +66,15 @@ class PannableCanvas extends Pane {
 		starSystemMarkerCircle60ly.setStroke(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.5, .5, .5, 1.0));
 		starSystemMarkerCircle60ly.setStrokeWidth(2);
 		starSystemMarkerCircle60ly.getStrokeDashArray().setAll(50d, 20d, 50d, 20d);;
-		starSystemMarkerCircle60ly.setFill(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.5, .5, .5, 0.2));
+		starSystemMarkerCircle60ly.setFill(null);
 		starSystemMarkerCircle60ly.setVisible(false);
 
 		double radius = 30 * Config.MAP_COORDINATES_MULTIPLICATOR; // 30 Lightyears
 		starSystemMarkerCircle30ly = new Circle(radius);
-		starSystemMarkerCircle30ly.setStroke(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(1, 1, 1, 1.0));
+		starSystemMarkerCircle30ly.setStroke(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.5, .5, .5, 1.0));
 		starSystemMarkerCircle30ly.setStrokeWidth(2);
 		starSystemMarkerCircle30ly.getStrokeDashArray().setAll(50d, 20d, 50d, 20d);;
-		starSystemMarkerCircle30ly.setFill(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(1, 1, 1, 0.2));
+		starSystemMarkerCircle30ly.setFill(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.6, .6, .6, 0.1));
 		starSystemMarkerCircle30ly.setVisible(false);
 
 		this.getChildren().add(starSystemMarkerCircle60ly);
