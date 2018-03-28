@@ -2,14 +2,14 @@ package net.clanwolf.c3.starmap;
 
 public class Attack {
 
-	Integer id = 0;
-	Integer season = 0;
-	Integer round = 0;
-	Integer starSystemId = 0;
-	Integer starSystemDataId = 0;
-	Integer attackedFromStarSystem = 0;
-	Integer attackerId = 0;
-	Integer defenderId = 0;
+	private Integer id = 0;
+	private Integer season = 0;
+	private Integer round = 0;
+	private Integer starSystemId = 0;
+	private Integer starSystemDataId = 0;
+	private Integer attackedFromStarSystem = 0;
+	private Integer attackerId = 0;
+	private Integer defenderId = 0;
 
 	public Integer getId() {
 		return id;
@@ -75,7 +75,7 @@ public class Attack {
 		this.defenderId = defenderId;
 	}
 
-	public Attack() {
+	Attack() {
 		// empty constructor
 	}
 }

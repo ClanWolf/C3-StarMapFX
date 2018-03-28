@@ -10,9 +10,6 @@ public class Arrow extends Group {
     // Usage of arrow:
     // https://stackoverflow.com/questions/41353685/how-to-draw-arrow-javafx-pane
 
-    // animated dotted line:
-    // https://stackoverflow.com/questions/36727777/how-to-animate-dashed-line-javafx
-
     private final Line line;
 
     public Arrow() {

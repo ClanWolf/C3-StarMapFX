@@ -19,6 +19,15 @@ public class StarSystem {
 	private Label starSystemLabel;
 	private StackPane starSystemStackPane;
 	private Group starSystemGroup;
+	private PointD[] voronoiRegion;
+
+	public PointD[] getVoronoiRegion() {
+		return voronoiRegion;
+	}
+
+	public void setVoronoiRegion(PointD[] voronoiRegion) {
+		this.voronoiRegion = voronoiRegion;
+	}
 
 	public Integer getId() {
 		return id;

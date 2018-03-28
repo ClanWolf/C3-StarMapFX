@@ -9,6 +9,7 @@ public class Config {
 	protected static final Color MAP_BACKGROUND_AREA_BORDER_COLOR = Color.DARKORANGE;
 	protected static final Color MAP_RANGE_CIRCLE_COLOR = Color.LIGHTBLUE;
 	protected static final boolean MAP_HIGHLIGHT_HOVERED_STARSYSTEM = true;
+	protected static final boolean MAP_FLASH_ATTACKED_SYSTEMS = true;
 	protected static final double MAP_WIDTH = 6000;
 	protected static final double MAP_HEIGHT = 6000;
 	protected static final double MAP_MAX_SCALE = 3.0d;
@@ -28,7 +29,7 @@ public class Config {
 
 	// Background stars
 	protected static final int BACKGROUND_STARS_MAX_SIZE = 4;
-	protected static final int BACKGROUND_STARS_LAYERS[][] = {{1, 300, 1}, {2, 200, 2}, {3, 100, 4}}; // level, number of stars, moving factor
+	static final int BACKGROUND_STARS_LAYERS[][] = {{1, 300, 1}, {2, 200, 2}, {3, 100, 4}}; // level, number of stars, moving factor
 
 	private Config() {
 		// private constructor

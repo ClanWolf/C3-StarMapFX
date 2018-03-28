@@ -35,7 +35,7 @@ public class GeoTools {
 
 			// create clipped circles to render the inner areas
 			Faction faction = factions.get(ss.getAffiliation());
-			Path path = null;
+			Path path;
 			if (faction.getBackgroundPath() != null) {
 				path = faction.getBackgroundPath();
 			} else {
@@ -56,6 +56,7 @@ public class GeoTools {
 				PolygonLocation location = GeoUtils.pointInPolygon(p, region);
 				if ("INSIDE".equals(location.toString())) {
 					Faction faction = factions.get(ss.getAffiliation());
+					ss.setVoronoiRegion(region);
 					faction.addVoronoiRegion(region);
 				}
 			}
@@ -68,7 +69,7 @@ public class GeoTools {
 				for (PointD[] region : faction.getVoronoiRegions()) {
 					Polygon polygon = new Polygon(PointD.toDoubles(region));
 					if (regions == null) {
-						regions = (Shape)polygon;
+						regions = polygon;
 					} else {
 						regions = Shape.union(regions, polygon);
 					}
@@ -85,15 +86,6 @@ public class GeoTools {
 				}
 			}
 		}
-
-		// draw interior of Voronoi regions
-//		for (PointD[] region: results.voronoiRegions()) {
-//			final Polygon polygon = new Polygon(PointD.toDoubles(region));
-//			polygon.setFill(Color.PALEGOLDENROD);
-//			polygon.setStroke(Color.WHITE);
-//			polygon.setStrokeWidth(6);
-//			borderPane.getChildren().add(polygon);
-//		}
 
 		// draw edges of Voronoi diagram
 //		for (VoronoiEdge edge : results.voronoiEdges) {
@@ -116,14 +108,6 @@ public class GeoTools {
 //			line.getStrokeDashArray().addAll(3.0, 2.0);
 //			line.setStroke(Color.BLUE);
 //			borderPane.getChildren().add(line);
-//		}
-
-		// draw generator points
-//		for (PointD point : points) {
-//			final Circle shape = new Circle(point.x, point.y, diameter / 2);
-//			shape.setFill(Color.BLACK);
-//			shape.setStroke(Color.BLACK);
-//			borderPane.getChildren().add(shape);
 //		}
 
 		return borderPane;
