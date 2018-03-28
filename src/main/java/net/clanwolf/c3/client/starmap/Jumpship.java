@@ -1,4 +1,4 @@
-package net.clanwolf.c3.starmap;
+package net.clanwolf.c3.client.starmap;
 
 import javafx.scene.image.ImageView;
 
