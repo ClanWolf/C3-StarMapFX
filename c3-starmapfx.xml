@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="c3-starmapfx" default="all">
+  
+  
+  <property file="c3-starmapfx.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.javax.json-1.1.2.classpath">
+    <pathelement location="${basedir}/lib/javax.json-1.1.2.jar"/>
+  </path>
+  
+  <path id="library.javax.json-api-1.1.2.classpath">
+    <pathelement location="${basedir}/lib/javax.json-api-1.1.2.jar"/>
+  </path>
+  
+  <path id="library.tektosyne.classpath">
+    <pathelement location="${basedir}/lib/Tektosyne.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module C3-StarMapFX -->
+  
+  <dirname property="module.c3-starmapfx.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.c3-starmapfx" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.c3-starmapfx" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.c3-starmapfx" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.c3-starmapfx" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="c3-starmapfx.output.dir" value="${module.c3-starmapfx.basedir}/out/production/C3-StarMapFX"/>
+  <property name="c3-starmapfx.testoutput.dir" value="${module.c3-starmapfx.basedir}/out/test/C3-StarMapFX"/>
+  
+  <path id="c3-starmapfx.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="c3-starmapfx.module.production.classpath">
+    <path refid="${module.jdk.classpath.c3-starmapfx}"/>
+    <path refid="library.javax.json-1.1.2.classpath"/>
+    <path refid="library.javax.json-api-1.1.2.classpath"/>
+    <path refid="library.tektosyne.classpath"/>
+  </path>
+  
+  <path id="c3-starmapfx.runtime.production.module.classpath">
+    <pathelement location="${c3-starmapfx.output.dir}"/>
+    <path refid="library.javax.json-1.1.2.classpath"/>
+    <path refid="library.javax.json-api-1.1.2.classpath"/>
+    <path refid="library.tektosyne.classpath"/>
+  </path>
+  
+  <path id="c3-starmapfx.module.classpath">
+    <path refid="${module.jdk.classpath.c3-starmapfx}"/>
+    <pathelement location="${c3-starmapfx.output.dir}"/>
+    <path refid="library.javax.json-1.1.2.classpath"/>
+    <path refid="library.javax.json-api-1.1.2.classpath"/>
+    <path refid="library.tektosyne.classpath"/>
+  </path>
+  
+  <path id="c3-starmapfx.runtime.module.classpath">
+    <pathelement location="${c3-starmapfx.testoutput.dir}"/>
+    <pathelement location="${c3-starmapfx.output.dir}"/>
+    <path refid="library.javax.json-1.1.2.classpath"/>
+    <path refid="library.javax.json-api-1.1.2.classpath"/>
+    <path refid="library.tektosyne.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.c3-starmapfx">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.c3-starmapfx">
+    <patternset refid="excluded.from.module.c3-starmapfx"/>
+  </patternset>
+  
+  <path id="c3-starmapfx.module.sourcepath">
+    <dirset dir="${module.c3-starmapfx.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="c3-starmapfx.module.test.sourcepath">
+    <dirset dir="${module.c3-starmapfx.basedir}">
+      <include name="src/test/resources"/>
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.c3-starmapfx" depends="compile.module.c3-starmapfx.production,compile.module.c3-starmapfx.tests" description="Compile module C3-StarMapFX"/>
+  
+  <target name="compile.module.c3-starmapfx.production" description="Compile module C3-StarMapFX; production classes">
+    <mkdir dir="${c3-starmapfx.output.dir}"/>
+    <javac destdir="${c3-starmapfx.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.c3-starmapfx}/javac">
+      <compilerarg line="${compiler.args.c3-starmapfx}"/>
+      <bootclasspath refid="c3-starmapfx.module.bootclasspath"/>
+      <classpath refid="c3-starmapfx.module.production.classpath"/>
+      <src refid="c3-starmapfx.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.c3-starmapfx"/>
+    </javac>
+    
+    <copy todir="${c3-starmapfx.output.dir}">
+      <fileset dir="${module.c3-starmapfx.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.c3-starmapfx.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.c3-starmapfx.tests" depends="compile.module.c3-starmapfx.production" description="compile module C3-StarMapFX; test classes" unless="skip.tests">
+    <mkdir dir="${c3-starmapfx.testoutput.dir}"/>
+    <javac destdir="${c3-starmapfx.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.c3-starmapfx}/javac">
+      <compilerarg line="${compiler.args.c3-starmapfx}"/>
+      <bootclasspath refid="c3-starmapfx.module.bootclasspath"/>
+      <classpath refid="c3-starmapfx.module.classpath"/>
+      <src refid="c3-starmapfx.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.c3-starmapfx"/>
+    </javac>
+    
+    <copy todir="${c3-starmapfx.testoutput.dir}">
+      <fileset dir="${module.c3-starmapfx.basedir}/src/test/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.c3-starmapfx.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.c3-starmapfx" description="cleanup module">
+    <delete dir="${c3-starmapfx.output.dir}"/>
+    <delete dir="${c3-starmapfx.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.c3-starmapfx" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.c3-starmapfx" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.c3-starmapfx" value="${basedir}/out/artifacts/C3_StarMapFX"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.C3-StarMapFX.jar" value="${artifacts.temp.dir}/C3-StarMapFX.jar"/>
+  </target>
+  
+  <target name="artifact.c3-starmapfx" depends="init.artifacts, compile.module.c3-starmapfx" description="Build &#39;C3-StarMapFX&#39; artifact">
+    <property name="artifact.temp.output.c3-starmapfx" value="${artifacts.temp.dir}/C3_StarMapFX"/>
+    <mkdir dir="${artifact.temp.output.c3-starmapfx}"/>
+    <jar destfile="${temp.jar.path.C3-StarMapFX.jar}" duplicate="preserve" filesetmanifest="merge">
+      <zipfileset dir="${c3-starmapfx.output.dir}"/>
+      <zipfileset src="${basedir}/lib/Tektosyne.jar"/>
+      <zipfileset src="${basedir}/lib/javax.json-api-1.1.2.jar"/>
+      <zipfileset src="${basedir}/lib/javax.json-1.1.2.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.C3-StarMapFX.jar}" tofile="${artifact.temp.output.c3-starmapfx}/C3-StarMapFX.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.c3-starmapfx" description="Build all artifacts">
+    <mkdir dir="${artifact.output.c3-starmapfx}"/>
+    <copy todir="${artifact.output.c3-starmapfx}">
+      <fileset dir="${artifact.temp.output.c3-starmapfx}"/>
+    </copy>
+
+    <copy file="${basedir}/run.cmd"
+          tofile="${artifact.output.c3-starmapfx}/run.cmd"/>
+    <copy file="${basedir}/mapdata_Factions.json"
+          tofile="${artifact.output.c3-starmapfx}/mapdata_Factions.json"/>
+    <copy file="${basedir}/mapdata_HH_Attacks.json"
+          tofile="${artifact.output.c3-starmapfx}/mapdata_HH_Attacks.json"/>
+    <copy file="${basedir}/mapdata_HH_Jumpships.json"
+          tofile="${artifact.output.c3-starmapfx}/mapdata_HH_Jumpships.json"/>
+    <copy file="${basedir}/mapdata_HH_StarSystems.json"
+          tofile="${artifact.output.c3-starmapfx}/mapdata_HH_StarSystems.json"/>
+
+    <zip destfile="${basedir}/out/artifacts/C3-StarMapFX.zip" basedir="${artifact.output.c3-starmapfx}"/>
+
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

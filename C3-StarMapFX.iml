@@ -10,6 +10,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" name="javax.json-1.1.2" level="project" />
+    <orderEntry type="library" name="javax.json-api-1.1.2" level="project" />
+    <orderEntry type="library" name="Tektosyne" level="project" />
   </component>
 </module>

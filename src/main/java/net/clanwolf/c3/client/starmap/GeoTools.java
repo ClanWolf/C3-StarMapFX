@@ -10,12 +10,9 @@ import java.util.HashMap;
 
 public class GeoTools {
 
-	//  https://gist.github.com/oliverheilig/c9f3c5f7ba8c975b06e4
-	//  http://oliverheilig.github.io/voronoi-territories/
-
 	private static ArrayList<VoronoiEdge> innerEdges = new ArrayList<>();
 
-	protected static Pane getAreas(HashMap<String, StarSystem> universe, HashMap<String, Faction> factions) {
+	protected static Pane getAreas(HashMap<Integer, StarSystem> universe, HashMap<String, Faction> factions) {
 		final Pane borderPane = new Pane();
 		final double diameter = 4;
 		PointD[] points = new PointD[universe.size()];
@@ -26,12 +23,6 @@ public class GeoTools {
 			PointD p = new PointD(ss.getScreenX(), ss.getScreenY());
 			points[count] = p;
 			count++;
-
-//			// Color of the borderline around the edges
-//			Circle c = new Circle(p.x, p.y, Config.MAP_BACKGROUND_AREA_RADIUS);
-//			c.setStroke(null);
-//			c.setFill(Config.MAP_BACKGROUND_AREA_BORDER_COLOR);
-//			borderPane.getChildren().add(c);
 
 			// create clipped circles to render the inner areas
 			Faction faction = factions.get(ss.getAffiliation());
