@@ -73,7 +73,7 @@ class PannableCanvas extends Pane {
 		starSystemMarkerCircle30ly = new Circle(radius);
 		starSystemMarkerCircle30ly.setStroke(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.5, .5, .5, 1.0));
 		starSystemMarkerCircle30ly.setStrokeWidth(2);
-		starSystemMarkerCircle30ly.getStrokeDashArray().setAll(50d, 20d, 50d, 20d);;
+		starSystemMarkerCircle30ly.getStrokeDashArray().setAll(10d, 10d, 10d, 10d);;
 		starSystemMarkerCircle30ly.setFill(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.6, .6, .6, 0.1));
 		starSystemMarkerCircle30ly.setVisible(false);
 
@@ -967,22 +967,18 @@ public class StarMap extends Application {
 
 			canvas.setJumpships(jumpships);
 			for (Jumpship js : jumpships.values()){
-				// TODO: DB-Table "Ships"
-				// There needs to be a separate table on DB for all ships
-				// Ships that have not moved yet must be displayed as well, so
-				// here we cannot iterate attacks but rather a list of jumpships from
-				// the database.
-				// Attacking ships are located in the attacked system.
-
+				// TODO: Jumpships
 				Integer currentSystemID = js.getCurrentSystemID();
 				ArrayList<Integer> hist = js.getStarSystemHistoryArray();
 
 				if (currentSystemID != null) {
 					ImageView jumpshipImage;
 					if (js.isCombatReady()) {
-						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_red.png"));
+						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_blue.png"));
+						jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+						jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 					} else {
-						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_neutral.png"));
+						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_red.png"));
 					}
 					jumpshipImage.setId(js.getShipName());
 					jumpshipImage.setPreserveRatio(true);
@@ -992,8 +988,6 @@ public class StarMap extends Application {
 					jumpshipImage.setTranslateX(universe.get(currentSystemID).getScreenX() - 35);
 					jumpshipImage.setTranslateY(universe.get(currentSystemID).getScreenY() - 8);
 					jumpshipImage.setMouseTransparent(false);
-					jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
-					jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 					jumpshipImage.toFront();
 					jumpshipImage.setVisible(false);
 					canvas.getChildren().add(jumpshipImage);
