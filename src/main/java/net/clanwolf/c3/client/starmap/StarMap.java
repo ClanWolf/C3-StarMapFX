@@ -305,18 +305,24 @@ class PannableCanvas extends Pane {
 				attacksVisible = false;
 				attacksPane.setVisible(false);
 				for (Jumpship ship : jumpships.values()) {
-					ship.getJumpshipImage().setVisible(false);
+					if (ship.getJumpshipImage() != null) {
+						ship.getJumpshipImage().setVisible(false);
+					}
 				}
 			}
 			if (myScale.get() >= Config.zoomLevelToHideJumpships) {
 				jumpshipsVisible = true;
 				for (Jumpship ship : jumpships.values()) {
-					ship.getJumpshipImage().setVisible(true);
+					if (ship.getJumpshipImage() != null) {
+						ship.getJumpshipImage().setVisible(true);
+					}
 				}
 			} else if (myScale.get() < Config.zoomLevelToHideJumpships) {
 				jumpshipsVisible = false;
 				for (Jumpship ship : jumpships.values()) {
-					ship.getJumpshipImage().setVisible(false);
+					if (ship.getJumpshipImage() != null) {
+						ship.getJumpshipImage().setVisible(false);
+					}
 				}
 			}
 		}
@@ -402,7 +408,14 @@ class NodeGestures {
 			}
 			Node node = (Node) event.getSource();
 			StarSystem clickedStarSystem = universe.get(Integer.parseInt(node.getId()));
-			System.out.println("System: " + clickedStarSystem.getName() + " (x: " + clickedStarSystem.getX() + " | y: " + clickedStarSystem.getY() + ")");
+			System.out.println("System: "
+					+ clickedStarSystem.getName()
+					+ " (x: " + clickedStarSystem.getX()
+					+ " | y: " + clickedStarSystem.getY()
+					+ ") - "
+					+ "["
+					+ clickedStarSystem.getId()
+					+ "]");
 
 			canvas.showStarSystemMarker(clickedStarSystem);
 		}
@@ -747,10 +760,16 @@ public class StarMap extends Application {
 				if (val instanceof JsonObject) {
 					JsonObject obj = (JsonObject) val;
 					Jumpship js = new Jumpship();
-					js.setShipID(obj.getInt("jsd"));
-					js.setShipName(obj.getString("JumpshipName"));
-					js.setFactionID(obj.getInt("JumpshipFactionID"));
-					js.setLastMovedInRound(obj.getInt("LastMovedInRound"));
+					js.setShipID(obj.getInt("jsid"));
+					js.setShipName(obj.getString("jumpshipName"));
+					js.setFactionID(obj.getInt("jumpshipFactionID"));
+					js.setStarSystemHistory(obj.getString("starHist"));
+					js.setLastMovedInRound(obj.getInt("lastMovedInRound"));
+					if (obj.getInt("attackReady") == 1) {
+						js.setCombatReady(true);
+					} else {
+						js.setCombatReady(false);
+					}
 					jumpships.put(js.getShipName(), js);
 				}
 			}
@@ -881,14 +900,8 @@ public class StarMap extends Application {
 					StarSystem attackedSystem = null;
 					StarSystem attackerStartedFromSystem = null;
 
-					for (StarSystem ss : universe.values()) {
-						if (attack.getStarSystemId().equals(ss.getId())) {
-							attackedSystem = ss;
-						}
-						if (attack.getAttackedFromStarSystem().equals(ss.getId())) {
-							attackerStartedFromSystem = ss;
-						}
-					}
+					attackedSystem = universe.get(attack.getStarSystemId());
+					attackerStartedFromSystem = universe.get(attack.getAttackedFromStarSystem());
 
 					if (attackedSystem != null && attackerStartedFromSystem != null) {
 						if (Config.MAP_FLASH_ATTACKED_SYSTEMS) {
@@ -961,25 +974,32 @@ public class StarMap extends Application {
 				// the database.
 				// Attacking ships are located in the attacked system.
 
-				js.getStarSystemHistoryArray();
-				js.getCurrentSystemID();
+				Integer currentSystemID = js.getCurrentSystemID();
+				ArrayList<Integer> hist = js.getStarSystemHistoryArray();
 
-				ImageView jumpshipImage = new ImageView(new Image("images/map/jumpship_left_red.png"));
-				jumpshipImage.setId(js.getShipName());
-				jumpshipImage.setPreserveRatio(true);
-				jumpshipImage.setFitWidth(30);
-				jumpshipImage.setCacheHint(CacheHint.QUALITY);
-				jumpshipImage.setSmooth(false);
-				//jumpshipImage.setTranslateX(attackedSystem.getScreenX() - 35);
-				//jumpshipImage.setTranslateY(attackedSystem.getScreenY() - 8);
-				jumpshipImage.setMouseTransparent(false);
-				jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
-				jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
-				jumpshipImage.toFront();
-				jumpshipImage.setVisible(false);
-				canvas.getChildren().add(jumpshipImage);
+				if (currentSystemID != null) {
+					ImageView jumpshipImage;
+					if (js.isCombatReady()) {
+						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_red.png"));
+					} else {
+						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_neutral.png"));
+					}
+					jumpshipImage.setId(js.getShipName());
+					jumpshipImage.setPreserveRatio(true);
+					jumpshipImage.setFitWidth(30);
+					jumpshipImage.setCacheHint(CacheHint.QUALITY);
+					jumpshipImage.setSmooth(false);
+					jumpshipImage.setTranslateX(universe.get(currentSystemID).getScreenX() - 35);
+					jumpshipImage.setTranslateY(universe.get(currentSystemID).getScreenY() - 8);
+					jumpshipImage.setMouseTransparent(false);
+					jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
+					jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+					jumpshipImage.toFront();
+					jumpshipImage.setVisible(false);
+					canvas.getChildren().add(jumpshipImage);
 
-				js.setJumpshipImage(jumpshipImage);
+					js.setJumpshipImage(jumpshipImage);
+				}
 			}
 
 			String image = "images/map/background.jpg";

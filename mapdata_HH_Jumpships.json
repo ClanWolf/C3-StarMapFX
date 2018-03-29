@@ -1,15 +1,17 @@
 {
   "HH_Jumpships" : [ {
-    "LastMovedInRound" : 6,
-    "JumpshipFactionID" : 36,
-    "AttackReady" : 1,
-    "JumpshipName" : "Direwolf",
-    "jsd" : 1
+    "jumpshipName" : "Direwolf",
+    "jumpshipFactionID" : 36,
+    "lastMovedInRound" : 6,
+    "jsid" : 1,
+    "starHist" : "654;269;",
+    "attackReady" : 0
   }, {
-    "LastMovedInRound" : 6,
-    "JumpshipFactionID" : 30,
-    "AttackReady" : 1,
-    "JumpshipName" : "McKennas Pride",
-    "jsd" : 2
+    "jumpshipName" : "McKennas Pride",
+    "jumpshipFactionID" : 30,
+    "lastMovedInRound" : 6,
+    "jsid" : 2,
+    "starHist" : "1642;1962;",
+    "attackReady" : 1
   } ]
 }
