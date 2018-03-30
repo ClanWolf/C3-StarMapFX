@@ -7,7 +7,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -25,6 +24,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import net.clanwolf.c3.client.starmap.tools.VoronoiDelaunay;
+import net.clanwolf.c3.client.starmap.universe.*;
 import org.kynosarges.tektosyne.geometry.PointD;
 
 import javax.json.*;
@@ -36,19 +37,14 @@ import java.util.Map.Entry;
 
 class PannableCanvas extends Pane {
 	private DoubleProperty myScale = new SimpleDoubleProperty(1.0);
-	private HashMap<Integer, StarSystem> universe = null;
 	private Canvas grid_500 = null;
 	private Canvas grid_250 = null;
 	private Canvas grid_center = null;
 	private Pane starPane = null;
 	private Pane attacksPane = null;
-	private HashMap<String, Jumpship> jumpships = null;
 	private HashMap<Integer, ArrayList<Circle>> starPanelsStarLists = new HashMap<>();
 
 	private boolean starSystemLabelsVisible = true;
-	private boolean starSystemCirclesVisible = true;
-	private boolean attacksVisible = true;
-	private boolean jumpshipsVisible = false;
 
 	private Circle starSystemMarkerCircle30ly;
 	private Circle starSystemMarkerCircle60ly;
@@ -65,7 +61,7 @@ class PannableCanvas extends Pane {
 		starSystemMarkerCircle60ly = new Circle(radius2);
 		starSystemMarkerCircle60ly.setStroke(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.5, .5, .5, 1.0));
 		starSystemMarkerCircle60ly.setStrokeWidth(2);
-		starSystemMarkerCircle60ly.getStrokeDashArray().setAll(50d, 20d, 50d, 20d);;
+		starSystemMarkerCircle60ly.getStrokeDashArray().setAll(50d, 20d, 50d, 20d);
 		starSystemMarkerCircle60ly.setFill(null);
 		starSystemMarkerCircle60ly.setVisible(false);
 
@@ -73,7 +69,7 @@ class PannableCanvas extends Pane {
 		starSystemMarkerCircle30ly = new Circle(radius);
 		starSystemMarkerCircle30ly.setStroke(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.5, .5, .5, 1.0));
 		starSystemMarkerCircle30ly.setStrokeWidth(2);
-		starSystemMarkerCircle30ly.getStrokeDashArray().setAll(10d, 10d, 10d, 10d);;
+		starSystemMarkerCircle30ly.getStrokeDashArray().setAll(10d, 10d, 10d, 10d);
 		starSystemMarkerCircle30ly.setFill(Config.MAP_RANGE_CIRCLE_COLOR.deriveColor(.6, .6, .6, 0.1));
 		starSystemMarkerCircle30ly.setVisible(false);
 
@@ -83,10 +79,6 @@ class PannableCanvas extends Pane {
 
 	public void setAttacksPane(Pane attacksPane) {
 		this.attacksPane = attacksPane;
-	}
-
-	public void setJumpships(HashMap<String, Jumpship> jumpships) {
-		this.jumpships = jumpships;
 	}
 
 	public void hideStarSystemMarker() {
@@ -257,11 +249,11 @@ class PannableCanvas extends Pane {
 	}
 
 	private void setStarSystemLabelsVisible() {
-		if (universe != null) {
+		if (Universe.starSystems != null) {
 			if (myScale.get() >= Config.zoomLevelToHideStarSystemLabels) {
 				if (!starSystemLabelsVisible) {
 					starSystemLabelsVisible = true;
-					for (StarSystem ss : universe.values()) {
+					for (StarSystem ss : Universe.starSystems.values()) {
 						Label l = ss.getStarSystemLabel();
 						l.setVisible(starSystemLabelsVisible);
 					}
@@ -269,7 +261,7 @@ class PannableCanvas extends Pane {
 			} else if (myScale.get() < Config.zoomLevelToHideStarSystemLabels) {
 				if (starSystemLabelsVisible) {
 					starSystemLabelsVisible = false;
-					for (StarSystem ss : universe.values()) {
+					for (StarSystem ss : Universe.starSystems.values()) {
 						Label l = ss.getStarSystemLabel();
 						l.setVisible(starSystemLabelsVisible);
 					}
@@ -279,47 +271,41 @@ class PannableCanvas extends Pane {
 	}
 
 	private void setStarSystemCirclesVisible() {
-		if (universe != null) {
+		if (Universe.starSystems != null) {
 			if (myScale.get() >= Config.zoomLevelToHideStarSystemCircles) {
-				starSystemCirclesVisible = true;
-				for (StarSystem ss : universe.values()) {
+				for (StarSystem ss : Universe.starSystems.values()) {
 					Circle c = ss.getStarSystemCircle();
-					c.setVisible(starSystemCirclesVisible);
+					c.setVisible(true);
 				}
 			} else if (myScale.get() < Config.zoomLevelToHideStarSystemCircles) {
-				starSystemCirclesVisible = false;
-				for (StarSystem ss : universe.values()) {
+				for (StarSystem ss : Universe.starSystems.values()) {
 					Circle c = ss.getStarSystemCircle();
-					c.setVisible(starSystemCirclesVisible);
+					c.setVisible(false);
 				}
 			}
 		}
 	}
 
 	private void setAttacksVisible() {
-		if (universe != null && attacksPane != null) {
+		if (Universe.starSystems != null && attacksPane != null) {
 			if (myScale.get() >= Config.zoomLevelToHideAttacks) {
-				attacksVisible = true;
 				attacksPane.setVisible(true);
 			} else if (myScale.get() < Config.zoomLevelToHideAttacks) {
-				attacksVisible = false;
 				attacksPane.setVisible(false);
-				for (Jumpship ship : jumpships.values()) {
+				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(false);
 					}
 				}
 			}
 			if (myScale.get() >= Config.zoomLevelToHideJumpships) {
-				jumpshipsVisible = true;
-				for (Jumpship ship : jumpships.values()) {
+				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(true);
 					}
 				}
 			} else if (myScale.get() < Config.zoomLevelToHideJumpships) {
-				jumpshipsVisible = false;
-				for (Jumpship ship : jumpships.values()) {
+				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(false);
 					}
@@ -328,8 +314,7 @@ class PannableCanvas extends Pane {
 		}
 	}
 
-	public void setVisibility(HashMap<Integer, StarSystem> universe) {
-		this.universe = universe;
+	public void setVisibility() {
 		setStarSystemLabelsVisible();
 		setStarSystemCirclesVisible();
 		setGrid_500_Visible();
@@ -354,11 +339,9 @@ class DragContext {
  */
 class NodeGestures {
 	private DragContext nodeDragContext = new DragContext();
-	private HashMap<Integer, StarSystem> universe;
 	private PannableCanvas canvas;
 
-	NodeGestures(PannableCanvas canvas, HashMap<Integer, StarSystem> universe) {
-		this.universe = universe;
+	NodeGestures(PannableCanvas canvas) {
 		this.canvas = canvas;
 	}
 
@@ -407,7 +390,7 @@ class NodeGestures {
 				return;
 			}
 			Node node = (Node) event.getSource();
-			StarSystem clickedStarSystem = universe.get(Integer.parseInt(node.getId()));
+			StarSystem clickedStarSystem = Universe.starSystems.get(Integer.parseInt(node.getId()));
 			System.out.println("System: "
 					+ clickedStarSystem.getName()
 					+ " (x: " + clickedStarSystem.getX()
@@ -447,8 +430,9 @@ class NodeGestures {
 			Node node = (Node) event.getSource();
 			if (node instanceof ImageView) { // must be a jumpship
 				node.toFront();
-				String Name = node.getId();
-				System.out.println(Name);
+				String name = node.getId();
+				Jumpship ship = Universe.jumpships.get(name);
+				System.out.println(ship.getShipName());
 
 
 			}
@@ -495,9 +479,9 @@ class SceneGestures {
 	private EventHandler<MouseEvent> onMouseMovedEventHandler = event -> {
 		// TODO: Do something with hovered coordinates
 		// Fire an action to inform the surrounding frame about the currently hovered universe coordinates
-		double universeX = getUniverseX(event.getX());
-		double universeY = getUniverseX(event.getY());
-        //System.out.println("[" + universeX + ", " + universeY + "]");
+		// double universeX = getUniverseX(event.getX());
+		// double universeY = getUniverseX(event.getY());
+        // System.out.println("[" + universeX + ", " + universeY + "]");
     };
 
 	private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -632,12 +616,14 @@ class SceneGestures {
 		return value;
 	}
 
+	@SuppressWarnings("unused")
 	private double getUniverseX(double screenX) {
 		double universeX = screenX - (Config.MAP_WIDTH / 2);
 		universeX = universeX / Config.MAP_COORDINATES_MULTIPLICATOR;
 		return universeX;
 	}
 
+	@SuppressWarnings("unused")
 	private double getUniverseY(double screenY) {
 		double universeY = screenY - (Config.MAP_HEIGHT / 2);
 		universeY = universeY / Config.MAP_COORDINATES_MULTIPLICATOR;
@@ -649,15 +635,6 @@ class SceneGestures {
  * An application with a zoomable and pannable canvas.
  */
 public class StarMap extends Application {
-
-	private static HashMap<Integer, StarSystem> universe = new HashMap<>();
-	private static HashMap<String, Faction> factions = new HashMap<>();
-	private static ArrayList<Attack> attacks = new ArrayList<>();
-	private static HashMap<String, Jumpship> jumpships = new HashMap<>();
-
-	private Integer currentSeason = 1;
-	private Integer currentRound = 6;
-
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -681,7 +658,7 @@ public class StarMap extends Application {
 					f.setShortName(obj.getString("short"));
 					f.setColor(obj.getString("color"));
 
-					factions.put(f.getShortName(), f);
+					Universe.factions.put(f.getShortName(), f);
 				}
 			}
 		}
@@ -710,7 +687,7 @@ public class StarMap extends Application {
 					s.setAffiliation(obj.getString("affiliation"));
 					s.setId(id);
 
-					universe.put(id, s);
+					Universe.starSystems.put(id, s);
 				}
 			}
 		}
@@ -739,7 +716,7 @@ public class StarMap extends Application {
 					a.setAttackedFromStarSystem(obj.getInt("attackedfromstarsystem"));
 					a.setAttackerId(obj.getInt("attacker"));
 					a.setAttackerId(obj.getInt("defender"));
-					attacks.add(a);
+					Universe.attacks.add(a);
 				}
 			}
 		}
@@ -770,7 +747,7 @@ public class StarMap extends Application {
 					} else {
 						js.setCombatReady(false);
 					}
-					jumpships.put(js.getShipName(), js);
+					Universe.jumpships.put(js.getShipName(), js);
 				}
 			}
 		}
@@ -828,9 +805,9 @@ public class StarMap extends Application {
 			canvas.setTranslateY(Config.MAP_INITIAL_TRANSLATE_Y);
 
 			// create sample nodes which can be dragged
-			NodeGestures nodeGestures = new NodeGestures(canvas, universe);
+			NodeGestures nodeGestures = new NodeGestures(canvas);
 
-			for (StarSystem starSystem : universe.values()) {
+			for (StarSystem starSystem : Universe.starSystems.values()) {
 				String name = starSystem.getName();
 				Integer id = starSystem.getId();
 				double x = starSystem.getScreenX();
@@ -848,7 +825,7 @@ public class StarMap extends Application {
 				starSystem.setStarSystemLabel(starSystemLabel);
 				stackPane.getChildren().add(0, starSystemLabel);
 
-				String colorString = factions.get(starSystem.getAffiliation()).getColor();
+				String colorString = Universe.factions.get(starSystem.getAffiliation()).getColor();
 				Color c = Color.web(colorString);
 				Circle starSystemCircle = new Circle(4);
 				starSystemCircle.setStroke(c.deriveColor(1, 1, 1, 0.8));
@@ -876,7 +853,7 @@ public class StarMap extends Application {
 			canvas.addGrid_Center();
 			canvas.addGrid_500();
 			canvas.addGrid_250();
-			canvas.setVisibility(universe);
+			canvas.setVisibility();
 
 			Circle circle1 = new Circle(3000, 3000, 40);
 			circle1.setStroke(Color.ORANGE);
@@ -885,23 +862,21 @@ public class StarMap extends Application {
 			circle1.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 			canvas.getChildren().add(circle1);
 
-
-			Pane borders = GeoTools.getAreas(universe, factions);
+			Pane borders = VoronoiDelaunay.getAreas(Universe.starSystems, Universe.factions);
 			canvas.getChildren().add(borders);
 			borders.toBack();
-
 
 			// Attacks pane
 			Pane attacksPane = new Pane();
 			canvas.setAttacksPane(attacksPane);
 
-			for (Attack attack : attacks) {
-				if (attack.getSeason().equals(currentSeason) && attack.getRound().equals(currentRound)) {
-					StarSystem attackedSystem = null;
-					StarSystem attackerStartedFromSystem = null;
+			for (Attack attack : Universe.attacks) {
+				if (attack.getSeason().equals(Universe.currentSeason) && attack.getRound().equals(Universe.currentRound)) {
+					StarSystem attackedSystem;
+					StarSystem attackerStartedFromSystem;
 
-					attackedSystem = universe.get(attack.getStarSystemId());
-					attackerStartedFromSystem = universe.get(attack.getAttackedFromStarSystem());
+					attackedSystem = Universe.starSystems.get(attack.getStarSystemId());
+					attackerStartedFromSystem = Universe.starSystems.get(attack.getAttackedFromStarSystem());
 
 					if (attackedSystem != null && attackerStartedFromSystem != null) {
 						if (Config.MAP_FLASH_ATTACKED_SYSTEMS) {
@@ -910,7 +885,7 @@ public class StarMap extends Application {
 								Circle circle = new Circle(attackedSystem.getScreenX(), attackedSystem.getScreenY(), Config.MAP_BACKGROUND_AREA_RADIUS);
 								circle.setVisible(false);
 								Shape systemBackground = Shape.intersect(new Polygon(PointD.toDoubles(points)), circle);
-								String colorString = factions.get(attackerStartedFromSystem.getAffiliation()).getColor();
+								String colorString = Universe.factions.get(attackerStartedFromSystem.getAffiliation()).getColor();
 								Color c = Color.web(colorString);
 								systemBackground.setFill(c);
 								FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.0), (systemBackground));
@@ -965,8 +940,7 @@ public class StarMap extends Application {
 			canvas.getChildren().add(attacksPane);
 			attacksPane.toBack();
 
-			canvas.setJumpships(jumpships);
-			for (Jumpship js : jumpships.values()){
+			for (Jumpship js : Universe.jumpships.values()){
 				// TODO: Jumpships
 				Integer currentSystemID = js.getCurrentSystemID();
 				ArrayList<Integer> hist = js.getStarSystemHistoryArray();
@@ -985,8 +959,8 @@ public class StarMap extends Application {
 					jumpshipImage.setFitWidth(30);
 					jumpshipImage.setCacheHint(CacheHint.QUALITY);
 					jumpshipImage.setSmooth(false);
-					jumpshipImage.setTranslateX(universe.get(currentSystemID).getScreenX() - 35);
-					jumpshipImage.setTranslateY(universe.get(currentSystemID).getScreenY() - 8);
+					jumpshipImage.setTranslateX(Universe.starSystems.get(currentSystemID).getScreenX() - 35);
+					jumpshipImage.setTranslateY(Universe.starSystems.get(currentSystemID).getScreenY() - 8);
 					jumpshipImage.setMouseTransparent(false);
 					jumpshipImage.toFront();
 					jumpshipImage.setVisible(false);
@@ -1019,7 +993,7 @@ public class StarMap extends Application {
 			stage.show();
 
 			// do this after stage.show in order for the stackpane to have an actual size!
-			for (StarSystem ss : universe.values()) {
+			for (StarSystem ss : Universe.starSystems.values()) {
 				StackPane sp = ss.getStarSystemStackPane();
 				Group g = ss.getStarSystemGroup();
 				g.setLayoutX(-sp.getWidth() / 2);

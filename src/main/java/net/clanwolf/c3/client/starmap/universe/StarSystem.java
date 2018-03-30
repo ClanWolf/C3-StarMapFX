@@ -1,9 +1,10 @@
-package net.clanwolf.c3.client.starmap;
+package net.clanwolf.c3.client.starmap.universe;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import net.clanwolf.c3.client.starmap.Config;
 import org.kynosarges.tektosyne.geometry.PointD;
 
 import java.math.BigDecimal;

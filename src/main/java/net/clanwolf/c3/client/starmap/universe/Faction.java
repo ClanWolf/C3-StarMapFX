@@ -1,4 +1,4 @@
-package net.clanwolf.c3.client.starmap;
+package net.clanwolf.c3.client.starmap.universe;
 
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Path;

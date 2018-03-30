@@ -1,4 +1,4 @@
-package net.clanwolf.c3.client.starmap;
+package net.clanwolf.c3.client.starmap.universe;
 
 import javafx.scene.image.ImageView;
 
@@ -45,6 +45,7 @@ public class Jumpship {
 		return hist;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getCurrentSystemID() {
 		if (currentSystemID == null) {
 			ArrayList<Integer> hist = getStarSystemHistoryArray();
@@ -52,66 +53,82 @@ public class Jumpship {
 		return currentSystemID;
 	}
 
+	@SuppressWarnings("unused")
 	public boolean isCombatReady() {
 		return combatReady;
 	}
 
+	@SuppressWarnings("unused")
 	public void setCombatReady(boolean combatReady) {
 		this.combatReady = combatReady;
 	}
 
+	@SuppressWarnings("unused")
 	public String getStarSystemHistory() {
 		return starSystemHistory;
 	}
 
+	@SuppressWarnings("unused")
 	public void setStarSystemHistory(String starSystemHistory) {
 		this.starSystemHistory = starSystemHistory;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getLastMovedInRound() {
 		return lastMovedInRound;
 	}
 
+	@SuppressWarnings("unused")
 	public void setLastMovedInRound(Integer lastMovedInRound) {
 		this.lastMovedInRound = lastMovedInRound;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getFactionID() {
 		return factionID;
 	}
 
+	@SuppressWarnings("unused")
 	public void setFactionID(Integer factionID) {
 		this.factionID = factionID;
 	}
 
+	@SuppressWarnings("unused")
 	public boolean isMovedInCurrentRound() {
 		return movedInCurrentRound;
 	}
 
+	@SuppressWarnings("unused")
 	public void setMovedInCurrentRound(boolean movedInCurrentRound) {
 		this.movedInCurrentRound = movedInCurrentRound;
 	}
 
+	@SuppressWarnings("unused")
 	public ImageView getJumpshipImage() {
 		return jumpshipImage;
 	}
 
+	@SuppressWarnings("unused")
 	public void setJumpshipImage(ImageView jumpshipImage) {
 		this.jumpshipImage = jumpshipImage;
 	}
 
+	@SuppressWarnings("unused")
 	public Integer getShipID() {
 		return shipID;
 	}
 
+	@SuppressWarnings("unused")
 	public void setShipID(Integer shipID) {
 		this.shipID = shipID;
 	}
 
+	@SuppressWarnings("unused")
 	public String getShipName() {
 		return shipName;
 	}
 
+	@SuppressWarnings("unused")
 	public void setShipName(String shipName) {
 		this.shipName = shipName;
 	}

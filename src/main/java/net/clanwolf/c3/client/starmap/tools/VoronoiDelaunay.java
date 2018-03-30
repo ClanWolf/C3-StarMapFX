@@ -1,20 +1,21 @@
-package net.clanwolf.c3.client.starmap;
+package net.clanwolf.c3.client.starmap.tools;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import net.clanwolf.c3.client.starmap.Config;
+import net.clanwolf.c3.client.starmap.universe.Faction;
+import net.clanwolf.c3.client.starmap.universe.StarSystem;
 import org.kynosarges.tektosyne.geometry.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GeoTools {
+public class VoronoiDelaunay {
 
-	private static ArrayList<VoronoiEdge> innerEdges = new ArrayList<>();
+//	private static ArrayList<VoronoiEdge> innerEdges = new ArrayList<>();
 
-	protected static Pane getAreas(HashMap<Integer, StarSystem> universe, HashMap<String, Faction> factions) {
+	public static Pane getAreas(HashMap<Integer, StarSystem> universe, HashMap<String, Faction> factions) {
 		final Pane borderPane = new Pane();
-		final double diameter = 4;
 		PointD[] points = new PointD[universe.size()];
 
 		// paint the background circles
