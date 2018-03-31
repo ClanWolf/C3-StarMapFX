@@ -1,6 +1,9 @@
 package net.clanwolf.c3.client.starmap.universe;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,7 @@ public class Jumpship {
 	private boolean combatReady;
 	private ImageView jumpshipImage;
 	private Integer currentSystemID = null;
+	private Line predictedRouteLine = null;
 
 	public ArrayList<Integer> getStarSystemHistoryArray() {
 		ArrayList<Integer> hist = null;
@@ -51,6 +55,22 @@ public class Jumpship {
 			ArrayList<Integer> hist = getStarSystemHistoryArray();
 		}
 		return currentSystemID;
+	}
+
+	@SuppressWarnings("unused")
+	public Line getPredictedRouteLine() {
+		if (predictedRouteLine == null) {
+			predictedRouteLine = new Line();
+			predictedRouteLine.setStrokeWidth(3);
+			predictedRouteLine.setStroke(Color.ORANGE);
+			predictedRouteLine.setStrokeLineCap(StrokeLineCap.ROUND);
+		}
+		return predictedRouteLine;
+	}
+
+	@SuppressWarnings("unused")
+	public void setPredictedRouteLine(Line predictedRouteLine) {
+		this.predictedRouteLine = predictedRouteLine;
 	}
 
 	@SuppressWarnings("unused")

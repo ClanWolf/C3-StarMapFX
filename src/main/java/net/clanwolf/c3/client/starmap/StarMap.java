@@ -427,20 +427,30 @@ class NodeGestures {
 			}
 
 			double scale = canvas.getScale();
+			double newTranslateX = nodeDragContext.translateAnchorX + ((event.getSceneX() - nodeDragContext.mouseAnchorX) / scale);
+			double newTranslateY = nodeDragContext.translateAnchorY + ((event.getSceneY() - nodeDragContext.mouseAnchorY) / scale);
+
 			Node node = (Node) event.getSource();
 			if (node instanceof ImageView) { // must be a jumpship
 				node.toFront();
 				String name = node.getId();
 				Jumpship ship = Universe.jumpships.get(name);
-				System.out.println(ship.getShipName());
+				Line routeLine = ship.getPredictedRouteLine();
+				double startX = Universe.starSystems.get(ship.getCurrentSystemID()).getScreenX();
+				double startY = Universe.starSystems.get(ship.getCurrentSystemID()).getScreenY();
 
-
+				routeLine.setStartX(startX);
+				routeLine.setStartY(startY);
+				routeLine.setEndX(newTranslateX);
+				routeLine.setEndY(newTranslateY);
+				routeLine.setVisible(true);
+				if (!canvas.getChildren().contains(routeLine)) {
+					canvas.getChildren().add(routeLine);
+				}
 			}
 
-			node.setTranslateX(
-					nodeDragContext.translateAnchorX + ((event.getSceneX() - nodeDragContext.mouseAnchorX) / scale));
-			node.setTranslateY(
-					nodeDragContext.translateAnchorY + ((event.getSceneY() - nodeDragContext.mouseAnchorY) / scale));
+			node.setTranslateX(newTranslateX);
+			node.setTranslateY(newTranslateY);
 			event.consume();
 		}
 	};
