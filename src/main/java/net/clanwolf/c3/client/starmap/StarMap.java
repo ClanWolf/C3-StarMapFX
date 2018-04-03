@@ -16,8 +16,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -30,7 +29,8 @@ import org.kynosarges.tektosyne.geometry.PointD;
 
 import javax.json.*;
 import javax.json.JsonValue.ValueType;
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -140,12 +140,12 @@ class PannableCanvas extends Pane {
 
 	public void moveBackgroundStarPane(int level, double x, double y) {
 		Platform.runLater(() -> {
-            ArrayList<Circle> l = starPanelsStarLists.get(level);
-            for (Circle c : l) {
-                c.setCenterX(c.getCenterX() + x);
-                c.setCenterY(c.getCenterY() + y);
-            }
-        });
+			ArrayList<Circle> l = starPanelsStarLists.get(level);
+			for (Circle c : l) {
+				c.setCenterX(c.getCenterX() + x);
+				c.setCenterY(c.getCenterY() + y);
+			}
+		});
 	}
 
 	public void addGrid_500() {
@@ -295,6 +295,7 @@ class PannableCanvas extends Pane {
 				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(false);
+						ship.getPredictedRouteLine().setVisible(false);
 					}
 				}
 			}
@@ -302,12 +303,14 @@ class PannableCanvas extends Pane {
 				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(true);
+						ship.getPredictedRouteLine().setVisible(true);
 					}
 				}
 			} else if (myScale.get() < Config.zoomLevelToHideJumpships) {
 				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(false);
+						ship.getPredictedRouteLine().setVisible(false);
 					}
 				}
 			}
@@ -354,30 +357,77 @@ class NodeGestures {
 		return getOnMouseClickedEventHandler;
 	}
 
+	public EventHandler<MouseEvent> getOnMouseDragDetectedEventHandler() {
+		return onMouseDragDetectedEventHandler;
+	}
 	@SuppressWarnings("unused")
 	public EventHandler<MouseEvent> getOnMouseDraggedEventHandler() {
 		return onMouseDraggedEventHandler;
 	}
 
-	public EventHandler<MouseEvent> getOnStarSystemHoverEnteredEventHandler() { return onStarSystemHovereEnteredEventHandler; }
+	public EventHandler<MouseEvent> getOnStarSystemHoverEnteredEventHandler() {
+		return onStarSystemHoverEnteredEventHandler;
+	}
 
-	public EventHandler<MouseEvent> getOnStarSystemHoverExitedEventHandler() { return onStarSystemHovereExitedEventHandler; }
+	public EventHandler<MouseEvent> getOnStarSystemHoverExitedEventHandler() {
+		return onStarSystemHoverExitedEventHandler;
+	}
 
-	private EventHandler<MouseEvent> onStarSystemHovereEnteredEventHandler = event -> {
-        if (Config.MAP_HIGHLIGHT_HOVERED_STARSYSTEM) {
-            Node node = (Node) event.getSource();
-            Circle c = (Circle) node;
-            c.setRadius(8);
-        }
-    };
+	public EventHandler<MouseDragEvent> getOnStarSystemDragEnteredEventHandler() {
+		return onStarSystemDragEnteredEventHandler;
+	}
 
-	private EventHandler<MouseEvent> onStarSystemHovereExitedEventHandler = event -> {
-        if (Config.MAP_HIGHLIGHT_HOVERED_STARSYSTEM) {
-            Node node = (Node) event.getSource();
-            Circle c = (Circle) node;
-            c.setRadius(5);
-        }
-    };
+	public EventHandler<MouseDragEvent> getOnStarSystemDragExitedEventHandler() {
+		return onStarSystemDragExitedEventHandler;
+	}
+
+	public EventHandler<MouseEvent> getOnMouseReleasedEventHandler() {
+		return onMouseReleasedEventHandler;
+	}
+
+	private EventHandler<MouseEvent> onMouseReleasedEventHandler = event -> {
+		Node node = (Node) event.getSource();
+		if (node instanceof ImageView) {
+			Jumpship js = Universe.jumpships.get(node.getId());
+			js.getPredictedRouteLine().toFront();
+			node.toFront();
+		}
+	};
+
+	private EventHandler<MouseEvent> onMouseDragDetectedEventHandler = event -> {
+		Node sourceNode = (Node) event.getSource();
+		sourceNode.startFullDrag();
+	};
+
+	private EventHandler<MouseDragEvent> onStarSystemDragEnteredEventHandler = event -> {
+		Node node = (Node) event.getSource();
+		Circle c = (Circle) node;
+		c.setRadius(8);
+		event.consume();
+	};
+
+	private EventHandler<MouseDragEvent> onStarSystemDragExitedEventHandler = event -> {
+		Node node = (Node) event.getSource();
+		Circle c = (Circle) node;
+		c.setRadius(5);
+		event.consume();
+	};
+
+	private EventHandler<MouseEvent> onStarSystemHoverEnteredEventHandler = event -> {
+		if (Config.MAP_HIGHLIGHT_HOVERED_STARSYSTEM) {
+			Node node = (Node) event.getSource();
+			Circle c = (Circle) node;
+			c.setRadius(8);
+		}
+	};
+
+	private EventHandler<MouseEvent> onStarSystemHoverExitedEventHandler = event -> {
+		if (Config.MAP_HIGHLIGHT_HOVERED_STARSYSTEM) {
+			Node node = (Node) event.getSource();
+			Circle c = (Circle) node;
+			c.setRadius(5);
+		}
+	};
 
 	private EventHandler<MouseEvent> getOnMouseClickedEventHandler = new EventHandler<MouseEvent>() {
 		public void handle(MouseEvent event) {
@@ -432,17 +482,19 @@ class NodeGestures {
 
 			Node node = (Node) event.getSource();
 			if (node instanceof ImageView) { // must be a jumpship
-				node.toFront();
+				node.toBack();
 				String name = node.getId();
 				Jumpship ship = Universe.jumpships.get(name);
+				canvas.showStarSystemMarker(Universe.starSystems.get(ship.getCurrentSystemID()));
 				Line routeLine = ship.getPredictedRouteLine();
 				double startX = Universe.starSystems.get(ship.getCurrentSystemID()).getScreenX();
 				double startY = Universe.starSystems.get(ship.getCurrentSystemID()).getScreenY();
 
 				routeLine.setStartX(startX);
 				routeLine.setStartY(startY);
-				routeLine.setEndX(newTranslateX);
-				routeLine.setEndY(newTranslateY);
+				routeLine.setEndX(newTranslateX + 20);
+				routeLine.setEndY(newTranslateY + 10);
+				routeLine.toBack();
 				routeLine.setVisible(true);
 				if (!canvas.getChildren().contains(routeLine)) {
 					canvas.getChildren().add(routeLine);
@@ -491,8 +543,8 @@ class SceneGestures {
 		// Fire an action to inform the surrounding frame about the currently hovered universe coordinates
 		// double universeX = getUniverseX(event.getX());
 		// double universeY = getUniverseX(event.getY());
-        // System.out.println("[" + universeX + ", " + universeY + "]");
-    };
+		// System.out.println("[" + universeX + ", " + universeY + "]");
+	};
 
 	private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
 		@Override
@@ -720,7 +772,7 @@ public class StarMap extends Application {
 					Attack a = new Attack();
 					a.setId(obj.getInt("aid"));
 					a.setSeason(obj.getInt("season"));
-					a.setRound(obj.getInt( "round"));
+					a.setRound(obj.getInt("round"));
 					a.setStarSystemId(obj.getInt("starsystem"));
 					a.setStarSystemDataId(obj.getInt("starsystemdata"));
 					a.setAttackedFromStarSystem(obj.getInt("attackedfromstarsystem"));
@@ -845,6 +897,8 @@ public class StarMap extends Application {
 				starSystemCircle.setCacheHint(CacheHint.SCALE);
 				starSystemCircle.addEventFilter(MouseEvent.MOUSE_ENTERED, nodeGestures.getOnStarSystemHoverEnteredEventHandler());
 				starSystemCircle.addEventFilter(MouseEvent.MOUSE_EXITED, nodeGestures.getOnStarSystemHoverExitedEventHandler());
+				starSystemCircle.addEventFilter(MouseDragEvent.MOUSE_DRAG_ENTERED, nodeGestures.getOnStarSystemDragEnteredEventHandler());
+				starSystemCircle.addEventFilter(MouseDragEvent.MOUSE_DRAG_EXITED, nodeGestures.getOnStarSystemDragExitedEventHandler());
 
 				starSystem.setStarSystemCircle(starSystemCircle);
 				stackPane.getChildren().add(1, starSystemCircle);
@@ -950,7 +1004,7 @@ public class StarMap extends Application {
 			canvas.getChildren().add(attacksPane);
 			attacksPane.toBack();
 
-			for (Jumpship js : Universe.jumpships.values()){
+			for (Jumpship js : Universe.jumpships.values()) {
 				// TODO: Jumpships
 				Integer currentSystemID = js.getCurrentSystemID();
 				ArrayList<Integer> hist = js.getStarSystemHistoryArray();
@@ -961,6 +1015,8 @@ public class StarMap extends Application {
 						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_blue.png"));
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
+						jumpshipImage.addEventFilter(MouseEvent.DRAG_DETECTED, nodeGestures.getOnMouseDragDetectedEventHandler());
+						jumpshipImage.addEventFilter(MouseEvent.MOUSE_RELEASED, nodeGestures.getOnMouseReleasedEventHandler());
 					} else {
 						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_red.png"));
 					}
