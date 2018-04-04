@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import net.clanwolf.c3.client.starmap.tools.Route;
 import net.clanwolf.c3.client.starmap.tools.VoronoiDelaunay;
 import net.clanwolf.c3.client.starmap.universe.*;
 import org.kynosarges.tektosyne.geometry.PointD;
@@ -404,6 +405,11 @@ class NodeGestures {
 		Circle c = (Circle) node;
 		c.setRadius(8);
 		event.consume();
+
+		// TODO: Get the route
+		// Starting system and dragged target can be taken from new member vars to be created
+		//Route.getRoute();
+
 	};
 
 	private EventHandler<MouseDragEvent> onStarSystemDragExitedEventHandler = event -> {
@@ -634,7 +640,7 @@ class SceneGestures {
 				scale *= delta;
 			}
 
-			scale = clamp(scale, Config.MAP_MIN_SCALE, Config.MAP_MAX_SCALE);
+			scale = clamp(scale);
 			double f = (scale / oldScale) - 1;
 
 			// maxX = right overhang, maxY = lower overhang
@@ -668,12 +674,12 @@ class SceneGestures {
 		}
 	};
 
-	private static double clamp(double value, double min, double max) {
-		if (Double.compare(value, min) < 0) {
-			return min;
+	private static double clamp(double value) {
+		if (Double.compare(value, Config.MAP_MIN_SCALE) < 0) {
+			return Config.MAP_MIN_SCALE;
 		}
-		if (Double.compare(value, max) > 0) {
-			return max;
+		if (Double.compare(value, Config.MAP_MAX_SCALE) > 0) {
+			return Config.MAP_MAX_SCALE;
 		}
 		return value;
 	}

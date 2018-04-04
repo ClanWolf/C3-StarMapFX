@@ -100,7 +100,7 @@
   </path>
   
   <path id="library.tektosyne.classpath">
-    <pathelement location="${basedir}/lib/Tektosyne.jar"/>
+    <pathelement location="${basedir}/lib/tektosyne_6.2.0.jar"/>
   </path>
   
   <!-- Modules -->
@@ -249,7 +249,7 @@
     <mkdir dir="${artifact.temp.output.c3-starmapfx}"/>
     <jar destfile="${temp.jar.path.C3-StarMapFX.jar}" duplicate="preserve" filesetmanifest="merge">
       <zipfileset dir="${c3-starmapfx.output.dir}"/>
-      <zipfileset src="${basedir}/lib/Tektosyne.jar"/>
+      <zipfileset src="${basedir}/lib/tektosyne_6.2.0.jar"/>
       <zipfileset src="${basedir}/lib/javax.json-api-1.1.2.jar"/>
       <zipfileset src="${basedir}/lib/javax.json-1.1.2.jar"/>
     </jar>

@@ -12,6 +12,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="javax.json-1.1.2" level="project" />
     <orderEntry type="library" name="javax.json-api-1.1.2" level="project" />
-    <orderEntry type="library" name="Tektosyne" level="project" />
+    <orderEntry type="library" name="tektosyne_6.2.0" level="project" />
   </component>
 </module>

@@ -6,7 +6,9 @@ import javafx.scene.shape.*;
 import net.clanwolf.c3.client.starmap.Config;
 import net.clanwolf.c3.client.starmap.universe.Faction;
 import net.clanwolf.c3.client.starmap.universe.StarSystem;
+import net.clanwolf.c3.client.starmap.universe.Universe;
 import org.kynosarges.tektosyne.geometry.*;
+import org.kynosarges.tektosyne.subdivision.Subdivision;
 
 import java.util.HashMap;
 
@@ -39,10 +41,10 @@ public class VoronoiDelaunay {
 		}
 
 		final RectD clip = new RectD(0, 0, Config.MAP_WIDTH, Config.MAP_HEIGHT);
-		final VoronoiResults results = Voronoi.findAll(points, clip);
+		Universe.voronoiResults = Voronoi.findAll(points, clip);
 
 		// check what voronoi region contains the current star system
-		for (PointD[] region : results.voronoiRegions()) {
+		for (PointD[] region : Universe.voronoiResults.voronoiRegions()) {
 			for (StarSystem ss : universe.values()) {
 				PointD p = new PointD(ss.getScreenX(), ss.getScreenY());
 				PolygonLocation location = GeoUtils.pointInPolygon(p, region);
@@ -101,6 +103,9 @@ public class VoronoiDelaunay {
 //			line.setStroke(Color.BLUE);
 //			borderPane.getChildren().add(line);
 //		}
+
+		Universe.delaunaySubdivision = Universe.voronoiResults.toDelaunaySubdivision(clip, true);
+		Universe.graphManager = new GraphManager<>(Universe.delaunaySubdivision, 8, borderPane);
 
 		return borderPane;
 	}
