@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: net.clanwolf.c3.client.starmap.StarMap
-
