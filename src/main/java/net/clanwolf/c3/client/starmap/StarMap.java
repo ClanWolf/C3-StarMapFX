@@ -34,6 +34,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 class PannableCanvas extends Pane {
@@ -408,8 +410,17 @@ class NodeGestures {
 
 		// TODO: Get the route
 		// Starting system and dragged target can be taken from new member vars to be created
-		//Route.getRoute();
+		StarSystem startSystem = Universe.starSystems.get(Universe.currentlyDraggedJumpship.getCurrentSystemID());
+		StarSystem hovered = Universe.starSystems.get(Integer.parseInt(c.getId()));
 
+		System.out.println(Universe.currentlyDraggedJumpship.getShipName() + " : " + startSystem.getName() + " : " + hovered.getName());
+		List<StarSystem> route = Route.getRoute(startSystem, hovered);
+
+		Iterator i = route.iterator();
+		while (i.hasNext()) {
+			StarSystem s = (StarSystem) i.next();
+			System.out.println(s.getName());
+		}
 	};
 
 	private EventHandler<MouseDragEvent> onStarSystemDragExitedEventHandler = event -> {
@@ -488,6 +499,7 @@ class NodeGestures {
 
 			Node node = (Node) event.getSource();
 			if (node instanceof ImageView) { // must be a jumpship
+				Universe.currentlyDraggedJumpship = Universe.jumpships.get(node.getId());
 				node.toBack();
 				String name = node.getId();
 				Jumpship ship = Universe.jumpships.get(name);
@@ -896,6 +908,7 @@ public class StarMap extends Application {
 				String colorString = Universe.factions.get(starSystem.getAffiliation()).getColor();
 				Color c = Color.web(colorString);
 				Circle starSystemCircle = new Circle(4);
+				starSystemCircle.setId(starSystem.getId().toString());
 				starSystemCircle.setStroke(c.deriveColor(1, 1, 1, 0.8));
 				starSystemCircle.setFill(c.deriveColor(1, 1, 1, 0.4));
 				starSystemCircle.setVisible(true);
@@ -932,7 +945,7 @@ public class StarMap extends Application {
 			circle1.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 			canvas.getChildren().add(circle1);
 
-			Pane borders = VoronoiDelaunay.getAreas(Universe.starSystems, Universe.factions);
+			Pane borders = VoronoiDelaunay.getAreas();
 			canvas.getChildren().add(borders);
 			borders.toBack();
 

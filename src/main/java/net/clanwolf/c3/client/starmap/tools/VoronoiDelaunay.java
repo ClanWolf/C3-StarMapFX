@@ -16,19 +16,19 @@ public class VoronoiDelaunay {
 
 //	private static ArrayList<VoronoiEdge> innerEdges = new ArrayList<>();
 
-	public static Pane getAreas(HashMap<Integer, StarSystem> universe, HashMap<String, Faction> factions) {
+	public static Pane getAreas() {
 		final Pane borderPane = new Pane();
-		PointD[] points = new PointD[universe.size()];
+		PointD[] points = new PointD[Universe.starSystems.size()];
 
 		// paint the background circles
 		int count = 0;
-		for (StarSystem ss : universe.values()) {
+		for (StarSystem ss : Universe.starSystems.values()) {
 			PointD p = new PointD(ss.getScreenX(), ss.getScreenY());
 			points[count] = p;
 			count++;
 
 			// create clipped circles to render the inner areas
-			Faction faction = factions.get(ss.getAffiliation());
+			Faction faction = Universe.factions.get(ss.getAffiliation());
 			Path path;
 			if (faction.getBackgroundPath() != null) {
 				path = faction.getBackgroundPath();
@@ -45,18 +45,18 @@ public class VoronoiDelaunay {
 
 		// check what voronoi region contains the current star system
 		for (PointD[] region : Universe.voronoiResults.voronoiRegions()) {
-			for (StarSystem ss : universe.values()) {
+			for (StarSystem ss : Universe.starSystems.values()) {
 				PointD p = new PointD(ss.getScreenX(), ss.getScreenY());
 				PolygonLocation location = GeoUtils.pointInPolygon(p, region);
 				if ("INSIDE".equals(location.toString())) {
-					Faction faction = factions.get(ss.getAffiliation());
+					Faction faction = Universe.factions.get(ss.getAffiliation());
 					ss.setVoronoiRegion(region);
 					faction.addVoronoiRegion(region);
 				}
 			}
 		}
 
-		for (Faction faction : factions.values()) {
+		for (Faction faction : Universe.factions.values()) {
 			if (faction.getBackgroundPath() != null) {
 				Shape shape = faction.getBackgroundPath();
 				Shape regions = null;
