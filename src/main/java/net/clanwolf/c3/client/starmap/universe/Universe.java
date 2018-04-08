@@ -1,5 +1,8 @@
 package net.clanwolf.c3.client.starmap.universe;
 
+import javafx.scene.Group;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import net.clanwolf.c3.client.starmap.tools.GraphManager;
 import org.kynosarges.tektosyne.geometry.GeoUtils;
 import org.kynosarges.tektosyne.geometry.PointD;

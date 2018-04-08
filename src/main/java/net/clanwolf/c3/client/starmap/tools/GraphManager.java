@@ -29,17 +29,11 @@ public class GraphManager<T> implements GraphAgent<T> {
 		this.maxCost = maxCost;
 		maxWorld = new PointD(output.getWidth(), output.getHeight());
 
-		// set random step costs for all nodes
 		nodeCosts = new HashMap<>(graph.nodeCount());
 		for (T node : graph.nodes()) {
 			nodeCosts.put(node, 1);
 		}
-
-		// scaling factor for Subdivision (see getStepCost)
-		if (graph instanceof Subdivision)
-			scaleCost = maxWorld.x + maxWorld.y;
-		else
-			scaleCost = 1;
+		scaleCost = maxWorld.x + maxWorld.y;
 	}
 
 	@SuppressWarnings("unused")
@@ -153,8 +147,8 @@ public class GraphManager<T> implements GraphAgent<T> {
 		 */
 		//double distance = graph.getDistance(source, target);
 		//return (distance * (nodeCosts.get(source) + nodeCosts.get(target)) / 2);
-
-		return scaleCost * nodeCosts.get(target);
+		return (30 * (nodeCosts.get(source) + nodeCosts.get(target)) / 2);
+		//return scaleCost * nodeCosts.get(target);
 	}
 
 	private T findNode(StarSystem ss) {

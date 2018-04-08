@@ -1,5 +1,6 @@
 package net.clanwolf.c3.client.starmap.universe;
 
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -19,6 +20,7 @@ public class Jumpship {
 	private ImageView jumpshipImage;
 	private Integer currentSystemID = null;
 	private Line predictedRouteLine = null;
+	public static Group routeLines = null;
 
 	public ArrayList<Integer> getStarSystemHistoryArray() {
 		ArrayList<Integer> hist = null;

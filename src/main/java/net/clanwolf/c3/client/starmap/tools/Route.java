@@ -12,6 +12,7 @@ public class Route {
 	public static List<StarSystem> getRoute(StarSystem source, StarSystem destination) {
 		List<StarSystem> calculatedRoute = new ArrayList<>();
 
+//		Universe.graphManager.setVertexNeighbors(true);
 		List<PointD> route = Universe.graphManager.runAStar(source, destination);
 		for (PointD p : route) {
 			StarSystem ss = Universe.getStarSystemByPoint(p);

@@ -16,7 +16,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -34,7 +36,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -298,7 +299,7 @@ class PannableCanvas extends Pane {
 				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(false);
-						ship.getPredictedRouteLine().setVisible(false);
+//						ship.getPredictedRouteLine().setVisible(false);
 					}
 				}
 			}
@@ -306,14 +307,14 @@ class PannableCanvas extends Pane {
 				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(true);
-						ship.getPredictedRouteLine().setVisible(true);
+//						ship.getPredictedRouteLine().setVisible(true);
 					}
 				}
 			} else if (myScale.get() < Config.zoomLevelToHideJumpships) {
 				for (Jumpship ship : Universe.jumpships.values()) {
 					if (ship.getJumpshipImage() != null) {
 						ship.getJumpshipImage().setVisible(false);
-						ship.getPredictedRouteLine().setVisible(false);
+//						ship.getPredictedRouteLine().setVisible(false);
 					}
 				}
 			}
@@ -363,6 +364,7 @@ class NodeGestures {
 	public EventHandler<MouseEvent> getOnMouseDragDetectedEventHandler() {
 		return onMouseDragDetectedEventHandler;
 	}
+
 	@SuppressWarnings("unused")
 	public EventHandler<MouseEvent> getOnMouseDraggedEventHandler() {
 		return onMouseDraggedEventHandler;
@@ -394,6 +396,7 @@ class NodeGestures {
 			Jumpship js = Universe.jumpships.get(node.getId());
 			js.getPredictedRouteLine().toFront();
 			node.toFront();
+			Universe.currentlyDraggedJumpship.getPredictedRouteLine().setVisible(false);
 		}
 	};
 
@@ -416,11 +419,31 @@ class NodeGestures {
 		System.out.println(Universe.currentlyDraggedJumpship.getShipName() + " : " + startSystem.getName() + " : " + hovered.getName());
 		List<StarSystem> route = Route.getRoute(startSystem, hovered);
 
-		Iterator i = route.iterator();
-		while (i.hasNext()) {
-			StarSystem s = (StarSystem) i.next();
-			System.out.println(s.getName());
+		if (canvas.getChildren().contains(Universe.currentlyDraggedJumpship.routeLines)) {
+			canvas.getChildren().remove(Universe.currentlyDraggedJumpship.routeLines);
 		}
+		Universe.currentlyDraggedJumpship.routeLines = new Group();
+		for (int y = 0; y < route.size() - 1; y++) {
+			StarSystem s1 = (StarSystem) route.get(y);
+			StarSystem s2 = (StarSystem) route.get(y + 1);
+			Line line = new Line(s1.getScreenX(), s1.getScreenY(), s2.getScreenX(), s2.getScreenY());
+			line.setStrokeWidth(4);
+			line.getStrokeDashArray().setAll(5d, 5d, 5d, 5d);
+			if (y == 0) {
+				line.setStroke(Color.GREEN);
+			} else {
+				line.setStroke(Color.LIGHTGREEN);
+			}
+			line.setStrokeLineCap(StrokeLineCap.ROUND);
+			Universe.currentlyDraggedJumpship.routeLines.getChildren().add(line);
+//			Circle circle = new Circle(s2.getScreenX(), s2.getScreenY(), 9);
+//			circle.setStrokeWidth(2);
+//			circle.setStroke(Color.ORANGE);
+//			circle.setFill(Color.BLACK);
+//			Universe.currentlyDraggedJumpship.routeLines.getChildren().add(circle);
+		}
+		canvas.getChildren().add(Universe.currentlyDraggedJumpship.routeLines);
+		Universe.currentlyDraggedJumpship.routeLines.toBack();
 	};
 
 	private EventHandler<MouseDragEvent> onStarSystemDragExitedEventHandler = event -> {
@@ -514,6 +537,7 @@ class NodeGestures {
 				routeLine.setEndY(newTranslateY + 10);
 				routeLine.toBack();
 				routeLine.setVisible(true);
+				routeLine.setOpacity(0.1);
 				if (!canvas.getChildren().contains(routeLine)) {
 					canvas.getChildren().add(routeLine);
 				}
