@@ -426,6 +426,8 @@ class NodeGestures {
 		for (int y = 0; y < route.size() - 1; y++) {
 			StarSystem s1 = (StarSystem) route.get(y);
 			StarSystem s2 = (StarSystem) route.get(y + 1);
+
+			// Dotted line to every stop on the route
 			Line line = new Line(s1.getScreenX(), s1.getScreenY(), s2.getScreenX(), s2.getScreenY());
 			line.setStrokeWidth(4);
 			line.getStrokeDashArray().setAll(5d, 5d, 5d, 5d);
@@ -436,11 +438,30 @@ class NodeGestures {
 			}
 			line.setStrokeLineCap(StrokeLineCap.ROUND);
 			Universe.currentlyDraggedJumpship.routeLines.getChildren().add(line);
-//			Circle circle = new Circle(s2.getScreenX(), s2.getScreenY(), 9);
-//			circle.setStrokeWidth(2);
-//			circle.setStroke(Color.ORANGE);
-//			circle.setFill(Color.BLACK);
-//			Universe.currentlyDraggedJumpship.routeLines.getChildren().add(circle);
+
+			// Filled dots for every stop on the route (S1)
+			Circle circleS1 = new Circle();
+			circleS1.setCenterX(s1.getScreenX());
+			circleS1.setCenterY(s1.getScreenY());
+			circleS1.setRadius(s1.getStarSystemCircle().getRadius());
+			circleS1.setStrokeWidth(s1.getStarSystemCircle().getStrokeWidth());
+			circleS1.setStroke(Color.web(Universe.factions.get(s1.getAffiliation()).getColor()));
+			circleS1.setFill(Color.web(Universe.factions.get(s1.getAffiliation()).getColor()));
+			circleS1.setOpacity(1.0);
+			circleS1.setVisible(true);
+			Universe.currentlyDraggedJumpship.routeLines.getChildren().add(circleS1);
+
+			// Filled dots for every stop on the route (S2)
+			Circle circleS2 = new Circle();
+			circleS2.setCenterX(s2.getScreenX());
+			circleS2.setCenterY(s2.getScreenY());
+			circleS2.setRadius(s2.getStarSystemCircle().getRadius());
+			circleS2.setStrokeWidth(s2.getStarSystemCircle().getStrokeWidth());
+			circleS2.setStroke(Color.web(Universe.factions.get(s2.getAffiliation()).getColor()));
+			circleS2.setFill(Color.web(Universe.factions.get(s2.getAffiliation()).getColor()));
+			circleS2.setOpacity(1.0);
+			circleS2.setVisible(true);
+			Universe.currentlyDraggedJumpship.routeLines.getChildren().add(circleS2);
 		}
 		canvas.getChildren().add(Universe.currentlyDraggedJumpship.routeLines);
 		Universe.currentlyDraggedJumpship.routeLines.toBack();
