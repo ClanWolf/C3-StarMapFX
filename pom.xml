@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>groupId</groupId>
+    <artifactId>C3-StarMapFX</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mainClass>net.clanwolf.starmap.client.starmap.StarMap</mainClass>
+
+		<version.java>12</version.java>
+		<version.javafx>13</version.javafx>
+		<version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+		<version.asm>7.3.1</version.asm>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kynosarges</groupId>
+			<artifactId>tektosyne</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${version.javafx}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>${version.javafx}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-base</artifactId>
+			<version>${version.javafx}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${version.javafx}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>${version.javafx}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>${version.javafx}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.maven-compiler-plugin}</version>
+				<configuration>
+					<release>${version.java}</release>
+					<source>${version.java}</source>
+					<target>${version.java}</target>
+					<!--<compilerArgs>-->
+					<!--<compilerArg>&#45;&#45;module-path</compilerArg>-->
+					<!--<compilerArg>${project.build.directory}/modules</compilerArg>-->
+					<!--</compilerArgs>-->
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+						<version>${version.asm}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.moditect</groupId>
+				<artifactId>moditect-maven-plugin</artifactId>
+				<version>1.0.0.Beta2</version>
+				<executions>
+					<execution>
+						<id>add-module-infos</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-module-info</goal>
+						</goals>
+						<configuration>
+							<jdepsExtraArgs>
+								<arg>--multi-release</arg>
+								<arg>12</arg>
+							</jdepsExtraArgs>
+							<jvmVersion>${version.java}</jvmVersion>
+							<overwriteExistingFiles>true</overwriteExistingFiles>
+
+							<modules>
+								<module>
+									<artifact>
+										<groupId>org.kynosarges</groupId>
+										<artifactId>tektosyne</artifactId>
+										<version>6.2.0</version>
+									</artifact>
+									<moduleInfo>
+										<name>org.kynosarges.tektosyne</name>
+									</moduleInfo>
+<!--									<moduleInfoSource>-->
+<!--										module tektosyne {-->
+<!--										exports org.kynosarges.tektosyne;-->
+<!--										exports org.kynosarges.tektosyne.geometry;-->
+<!--										exports org.kynosarges.tektosyne.graph;-->
+<!--										exports org.kynosarges.tektosyne.subdivision;-->
+<!--										}-->
+<!--									</moduleInfoSource>-->
+								</module>
+							</modules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

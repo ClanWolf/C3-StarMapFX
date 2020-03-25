@@ -28,16 +28,17 @@ import javafx.util.Duration;
 import net.clanwolf.c3.client.starmap.tools.Route;
 import net.clanwolf.c3.client.starmap.tools.VoronoiDelaunay;
 import net.clanwolf.c3.client.starmap.universe.*;
-import org.kynosarges.tektosyne.geometry.PointD;
 
-import javax.json.*;
-import javax.json.JsonValue.ValueType;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
+import org.kynosarges.tektosyne.geometry.PointD;
+
+import javax.json.*;
 
 class PannableCanvas extends Pane {
 	private DoubleProperty myScale = new SimpleDoubleProperty(1.0);
@@ -766,14 +767,14 @@ public class StarMap extends Application {
 
 	private static void createFactions(JsonValue value) {
 		JsonObject object;
-		if (value.getValueType() == ValueType.OBJECT) {
+		if (value.getValueType() == JsonValue.ValueType.OBJECT) {
 			object = (JsonObject) value;
 			for (Entry<String, JsonValue> set : object.entrySet()) {
 				if (set.getValue() instanceof JsonArray) {
 					createFactions(set.getValue());
 				}
 			}
-		} else if (value.getValueType() == ValueType.ARRAY) {
+		} else if (value.getValueType() == JsonValue.ValueType.ARRAY) {
 			JsonArray array = (JsonArray) value;
 			for (JsonValue val : array) {
 				if (val instanceof JsonObject) {
@@ -791,14 +792,14 @@ public class StarMap extends Application {
 
 	private static void createUniverse(JsonValue value) {
 		JsonObject object;
-		if (value.getValueType() == ValueType.OBJECT) {
+		if (value.getValueType() == JsonValue.ValueType.OBJECT) {
 			object = (JsonObject) value;
 			for (Entry<String, JsonValue> set : object.entrySet()) {
 				if (set.getValue() instanceof JsonArray) {
 					createUniverse(set.getValue());
 				}
 			}
-		} else if (value.getValueType() == ValueType.ARRAY) {
+		} else if (value.getValueType() == JsonValue.ValueType.ARRAY) {
 			JsonArray array = (JsonArray) value;
 			for (JsonValue val : array) {
 				if (val instanceof JsonObject) {
@@ -820,14 +821,14 @@ public class StarMap extends Application {
 
 	private static void createAttacks(JsonValue value) {
 		JsonObject object;
-		if (value.getValueType() == ValueType.OBJECT) {
+		if (value.getValueType() == JsonValue.ValueType.OBJECT) {
 			object = (JsonObject) value;
 			for (Entry<String, JsonValue> set : object.entrySet()) {
 				if (set.getValue() instanceof JsonArray) {
 					createAttacks(set.getValue());
 				}
 			}
-		} else if (value.getValueType() == ValueType.ARRAY) {
+		} else if (value.getValueType() == JsonValue.ValueType.ARRAY) {
 			JsonArray array = (JsonArray) value;
 			for (JsonValue val : array) {
 				if (val instanceof JsonObject) {
@@ -849,14 +850,14 @@ public class StarMap extends Application {
 
 	private static void createJumpships(JsonValue value) {
 		JsonObject object;
-		if (value.getValueType() == ValueType.OBJECT) {
+		if (value.getValueType() == JsonValue.ValueType.OBJECT) {
 			object = (JsonObject) value;
 			for (Entry<String, JsonValue> set : object.entrySet()) {
 				if (set.getValue() instanceof JsonArray) {
 					createJumpships(set.getValue());
 				}
 			}
-		} else if (value.getValueType() == ValueType.ARRAY) {
+		} else if (value.getValueType() == JsonValue.ValueType.ARRAY) {
 			JsonArray array = (JsonArray) value;
 			for (JsonValue val : array) {
 				if (val instanceof JsonObject) {
@@ -1076,13 +1077,13 @@ public class StarMap extends Application {
 				if (currentSystemID != null) {
 					ImageView jumpshipImage;
 					if (js.isCombatReady()) {
-						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_blue.png"));
+						jumpshipImage = new ImageView(new Image("/images/map/jumpship_left_blue.png"));
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.DRAG_DETECTED, nodeGestures.getOnMouseDragDetectedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_RELEASED, nodeGestures.getOnMouseReleasedEventHandler());
 					} else {
-						jumpshipImage = new ImageView(new Image("images/map/jumpship_left_red.png"));
+						jumpshipImage = new ImageView(new Image("/images/map/jumpship_left_red.png"));
 					}
 					jumpshipImage.setId(js.getShipName());
 					jumpshipImage.setPreserveRatio(true);

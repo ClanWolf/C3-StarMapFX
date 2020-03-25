@@ -55,9 +55,9 @@
   
   <!-- JDK definitions -->
   
-  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
-  <path id="jdk.classpath.1.8">
-    <fileset dir="${jdk.home.1.8}">
+  <property name="jdk.bin.10" value="${jdk.home.10}/bin"/>
+  <path id="jdk.classpath.10">
+    <fileset dir="${jdk.home.10}">
       <include name="jre/lib/charsets.jar"/>
       <include name="jre/lib/deploy.jar"/>
       <include name="jre/lib/ext/access-bridge-64.jar"/>
@@ -84,9 +84,9 @@
     </fileset>
   </path>
   
-  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  <property name="project.jdk.home" value="${jdk.home.10}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.10}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.10"/>
   
   
   <!-- Project Libraries -->
@@ -115,7 +115,7 @@
   <property name="module.jdk.bin.c3-starmapfx" value="${project.jdk.bin}"/>
   <property name="module.jdk.classpath.c3-starmapfx" value="${project.jdk.classpath}"/>
   
-  <property name="compiler.args.c3-starmapfx" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  <property name="compiler.args.c3-starmapfx" value="-encoding UTF-8 -source 10 -target 10 ${compiler.args}"/>
   
   <property name="c3-starmapfx.output.dir" value="${module.c3-starmapfx.basedir}/out/production/C3-StarMapFX"/>
   <property name="c3-starmapfx.testoutput.dir" value="${module.c3-starmapfx.basedir}/out/test/C3-StarMapFX"/>
