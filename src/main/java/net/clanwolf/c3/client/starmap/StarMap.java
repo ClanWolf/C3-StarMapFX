@@ -1101,11 +1101,11 @@ public class StarMap extends Application {
 				}
 			}
 
-			String image = "images/map/background.jpg";
+			String image = StarMap.class.getResource("/images/map/background.jpg").toExternalForm();
 			String style = "";
-			style = style + "-fx-background-image:url('";
-			style = style + image;
-			style = style + "');-fx-background-position:center center;-fx-background-repeat:repeat;";
+			style += "-fx-background-image:url('";
+			style += image;
+			style += "');-fx-background-position:center center;-fx-background-repeat:repeat;";
 
 			Pane p = new Pane();
 			p.setStyle(style);
