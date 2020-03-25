@@ -116,14 +116,6 @@
 									<moduleInfo>
 										<name>org.kynosarges.tektosyne</name>
 									</moduleInfo>
-<!--									<moduleInfoSource>-->
-<!--										module tektosyne {-->
-<!--										exports org.kynosarges.tektosyne;-->
-<!--										exports org.kynosarges.tektosyne.geometry;-->
-<!--										exports org.kynosarges.tektosyne.graph;-->
-<!--										exports org.kynosarges.tektosyne.subdivision;-->
-<!--										}-->
-<!--									</moduleInfoSource>-->
 								</module>
 							</modules>
 						</configuration>

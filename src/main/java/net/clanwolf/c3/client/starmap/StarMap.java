@@ -1077,13 +1077,13 @@ public class StarMap extends Application {
 				if (currentSystemID != null) {
 					ImageView jumpshipImage;
 					if (js.isCombatReady()) {
-						jumpshipImage = new ImageView(new Image("/images/map/jumpship_left_blue.png"));
+						jumpshipImage = new ImageView(new Image(StarMap.class.getResourceAsStream("/images/map/jumpship_left_blue.png")));
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_PRESSED, nodeGestures.getOnMousePressedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_DRAGGED, nodeGestures.getOnMouseDraggedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.DRAG_DETECTED, nodeGestures.getOnMouseDragDetectedEventHandler());
 						jumpshipImage.addEventFilter(MouseEvent.MOUSE_RELEASED, nodeGestures.getOnMouseReleasedEventHandler());
 					} else {
-						jumpshipImage = new ImageView(new Image("/images/map/jumpship_left_red.png"));
+						jumpshipImage = new ImageView(new Image(StarMap.class.getResourceAsStream("/images/map/jumpship_left_red.png")));
 					}
 					jumpshipImage.setId(js.getShipName());
 					jumpshipImage.setPreserveRatio(true);

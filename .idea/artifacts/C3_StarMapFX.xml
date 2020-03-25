@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="C3-StarMapFX">
-    <output-path>$PROJECT_DIR$/out/artifacts/C3_StarMapFX</output-path>
-    <root id="archive" name="C3-StarMapFX.jar">
-      <element id="module-output" name="C3-StarMapFX" />
-    </root>
-  </artifact>
-</component>
