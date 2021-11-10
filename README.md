@@ -1,4 +1,7 @@
 # C3-StarMapFX
+
+<img src="https://img.shields.io/liberapay/receives/WarWolfen.svg?logo=liberapay">
+
 StarMap Prototype in JavaFX
 
 # Copyright
